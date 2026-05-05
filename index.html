@@ -282,26 +282,30 @@
   .about-image-side {
     position: relative;
   }
-  .about-img-placeholder {
-    aspect-ratio: 4/5;
-    background: linear-gradient(135deg, #1a1206 0%, #2a1f0a 50%, #141008 100%);
+  .about-images-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 2rem;
+  }
+  .about-img-small {
+    width: 65%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
     border: 1px solid var(--glass-border);
-    position: relative; overflow: hidden;
+    display: block;
+    position: relative;
+    z-index: 1;
   }
-  .about-img-placeholder::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent, transparent 30px,
-      rgba(184,134,11,0.04) 30px, rgba(184,134,11,0.04) 31px
-    );
-  }
-  .about-img-inner-label {
-    position: absolute; bottom: 2rem; left: 2rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem; font-style: italic; color: var(--warm);
-    letter-spacing: 0.1em;
+  .about-img-large {
+    width: 90%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    margin-left: 10%;
+    margin-top: -15%;
+    position: relative;
+    z-index: 2;
   }
   .about-accent-box {
     position: absolute;
@@ -711,15 +715,9 @@
 <section>
   <div class="about-section">
     <div class="about-image-side reveal">
-      <div class="about-img-placeholder">
-        <div class="gallery-pattern"></div>
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-          <div style="text-align:center;">
-            <div style="font-family:'Italiana',serif;font-size:3rem;color:rgba(184,134,11,0.2);letter-spacing:0.1em;">AG'S</div>
-            <div style="font-size:0.55rem;letter-spacing:0.4em;color:rgba(184,134,11,0.25);text-transform:uppercase;margin-top:0.5rem;">Event Services</div>
-          </div>
-        </div>
-        <div class="about-img-inner-label">Crafting Excellence Since 2016</div>
+      <div class="about-images-wrapper">
+        <img src="image1.jpg" alt="AG Events First" class="about-img-small">
+        <img src="image2.jpg" alt="AG Events Second" class="about-img-large">
       </div>
       <div class="about-accent-box">
         <div class="number">8+</div>
