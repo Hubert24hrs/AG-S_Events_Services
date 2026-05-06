@@ -21,12 +21,16 @@
     --glass-border: rgba(184,134,11,0.25);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background: var(--black);
     color: var(--ivory);
     font-family: 'DM Sans', sans-serif;
     overflow-x: hidden;
-    cursor: none;
+    
   }
 
   /* CUSTOM CURSOR */
@@ -113,7 +117,7 @@
     text-decoration: none;
   }
   .menu-btn, .theme-toggle {
-    background: transparent; border: none; cursor: none;
+    background: transparent; border: none; 
     color: var(--ivory); display: flex; align-items: center; justify-content: center;
     transition: color 0.3s; padding: 0.5rem;
   }
@@ -135,7 +139,7 @@
   .menu-overlay.open { opacity: 1; pointer-events: auto; }
   .menu-close {
     position: absolute; top: 2rem; right: 4rem;
-    background: transparent; border: none; color: var(--ivory); cursor: none;
+    background: transparent; border: none; color: var(--ivory); 
     padding: 0.5rem; transition: color 0.3s;
   }
   .menu-close:hover { color: var(--gold); }
@@ -148,7 +152,7 @@
     font-family: 'Italiana', serif;
     font-size: 2.5rem; letter-spacing: 0.1em;
     color: rgba(250,248,245,0.7); text-decoration: none;
-    transition: color 0.3s, transform 0.3s; display: block; cursor: none;
+    transition: color 0.3s, transform 0.3s; display: block; 
   }
   .overlay-links a:hover { color: var(--gold); transform: scale(1.05); }
 
@@ -158,7 +162,7 @@
     border: 1px solid var(--gold);
     color: var(--gold);
     background: transparent;
-    cursor: none;
+    
     transition: background 0.3s, color 0.3s;
     font-family: 'DM Sans', sans-serif;
   }
@@ -257,7 +261,7 @@
     color: var(--black);
     font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
     font-family: 'DM Sans', sans-serif; font-weight: 500;
-    border: none; cursor: none;
+    border: none; 
     position: relative; overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
   }
@@ -277,7 +281,7 @@
     color: var(--ivory);
     font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
     font-family: 'DM Sans', sans-serif; font-weight: 400;
-    border: 1px solid rgba(250,248,245,0.35); cursor: none;
+    border: 1px solid rgba(250,248,245,0.35); 
     transition: border-color 0.3s, color 0.3s;
   }
   .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
@@ -713,7 +717,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: none;
+    
     transition: background-color 0.3s;
     border: 1px solid var(--gold);
     background: transparent;
@@ -771,8 +775,8 @@
   .news-card:hover { transform: translateY(-12px); border-color: var(--gold-bright); background: rgba(184,134,11,0.08); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
   .news-content { padding: 0; display: flex; flex-direction: column; flex-grow: 1; }
   .news-region { font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 1.5rem; font-weight: 700; }
-  .news-title { font-size: 2.2rem; font-family: 'Italiana', serif; color: var(--ivory); margin-bottom: 1.8rem; line-height: 1.2; letter-spacing: 0.03em; }
-  .news-excerpt { font-size: 1.2rem; color: rgba(255,255,255,0.8); margin-bottom: 2.5rem; line-height: 1.8; flex-grow: 1; font-weight: 300; }
+  .news-title { font-size: 2.4rem; font-family: 'Italiana', serif; color: var(--gold-light); margin-bottom: 1.8rem; line-height: 1.2; letter-spacing: 0.03em; font-weight: 600; }
+  .news-excerpt { font-size: 1.2rem; color: rgba(255,255,255,0.95); margin-bottom: 2.5rem; line-height: 1.8; flex-grow: 1; font-weight: 400; }
   .news-meta { font-size: 0.95rem; color: rgba(255,255,255,0.5); display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; }
 
   /* CTA BANNER */
@@ -833,7 +837,7 @@
   .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
   .footer-links a {
     font-size: 0.8rem; color: rgba(250,248,245,0.4);
-    text-decoration: none; transition: color 0.3s; cursor: none;
+    text-decoration: none; transition: color 0.3s; 
   }
   .footer-links a:hover { color: var(--gold); }
   .footer-contact-item {
@@ -852,7 +856,7 @@
   .footer-socials a {
     font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
     color: rgba(250,248,245,0.3); text-decoration: none;
-    transition: color 0.3s; cursor: none;
+    transition: color 0.3s; 
   }
   .footer-socials a:hover { color: var(--gold); }
 
@@ -865,7 +869,7 @@
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 24px rgba(37,211,102,0.35);
-    cursor: none;
+    
     transition: transform 0.3s, box-shadow 0.3s;
   }
   #whatsapp-fab:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 8px 32px rgba(37,211,102,0.5); }
@@ -880,7 +884,7 @@
     border: 1px solid rgba(184,134,11,0.3);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    cursor: none;
+    
     opacity: 0; transition: opacity 0.3s;
   }
   #back-top.visible { opacity: 1; }
@@ -898,7 +902,7 @@
   /* VIEW ALL LINK */
   .view-all {
     font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--gold); text-decoration: none; cursor: none;
+    color: var(--gold); text-decoration: none; 
     border-bottom: 1px solid rgba(184,134,11,0.3);
     padding-bottom: 2px; transition: border-color 0.3s;
   }
@@ -919,8 +923,6 @@
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <!-- LOADER -->
 <div id="loader">
@@ -972,13 +974,13 @@
     <div class="dynamic-frame"><img src="african_luxury_wedding_1778034678359.png" alt="Luxury Wedding"></div>
     <div class="dynamic-frame"><video src="video2.mp4" autoplay loop muted playsinline></video></div>
     
-    <div class="dynamic-frame"><img src="image4.jpeg" alt="AG Event"></div>
+    <div class="dynamic-frame"><img src="african_luxury_reception_hall.png" alt="Luxury Reception"></div>
     <div class="dynamic-frame"><img src="african_corporate_gala_1778034700184.png" alt="Corporate Gala"></div>
-    <div class="dynamic-frame"><img src="image6.jpeg" alt="AG Event"></div>
+    <div class="dynamic-frame"><img src="african_royal_traditional_engagement.png" alt="Traditional Engagement"></div>
     
     <div class="dynamic-frame"><video src="video3.mp4" autoplay loop muted playsinline></video></div>
     <div class="dynamic-frame"><img src="african_traditional_celebration_1778034722051.png" alt="Traditional Celebration"></div>
-    <div class="dynamic-frame"><img src="image8.jpeg" alt="AG Event"></div>
+    <div class="dynamic-frame"><img src="african_corporate_vip_lounge.png" alt="VIP Lounge"></div>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -1332,25 +1334,6 @@
     });
   }
 
-  // CURSOR
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursor-ring');
-  document.addEventListener('mousemove', function(e) {
-    cursor.style.left = (e.clientX - 7) + 'px';
-    cursor.style.top = (e.clientY - 7) + 'px';
-    ring.style.left = e.clientX + 'px';
-    ring.style.top = e.clientY + 'px';
-  });
-  document.querySelectorAll('a,button').forEach(function(el) {
-    el.addEventListener('mouseenter', function() {
-      cursor.style.width = '20px';
-      cursor.style.height = '20px';
-    });
-    el.addEventListener('mouseleave', function() {
-      cursor.style.width = '14px';
-      cursor.style.height = '14px';
-    });
-  });
 
   // PARTICLES
   const canvas = document.getElementById('particles-canvas');
@@ -1806,19 +1789,19 @@
   
   if (galleryCardsContainer && galleryDotsContainer) {
     const galleryItems = [
-      { id: 'v1', type: 'video', src: 'video1.mp4', title: 'Luxury Performance', desc: 'Experience the thrill of precision engineering' },
-      { id: 'i3', type: 'image', src: 'image3.jpeg', title: 'Elegant Design', desc: 'Where beauty meets functionality' },
-      { id: 'i4', type: 'image', src: 'image4.jpeg', title: 'Timeless Craftsmanship', desc: 'Built with passion, driven by excellence' },
-      { id: 'i5', type: 'image', src: 'image5.jpeg', title: 'Exquisite Details', desc: 'Every stitch tells a story' },
-      { id: 'v2', type: 'video', src: 'video2.mp4', title: 'Power & Speed', desc: 'Unleash the true potential' },
-      { id: 'i6', type: 'image', src: 'image6.jpeg', title: 'Modern Aesthetics', desc: 'Redefining contemporary style' },
-      { id: 'i7', type: 'image', src: 'image7.jpeg', title: 'Classic Lines', desc: 'A nod to the glorious past' },
-      { id: 'i8', type: 'image', src: 'image8.jpeg', title: 'Future of Mobility', desc: 'Innovation that moves you forward' },
-      { id: 'v3', type: 'video', src: 'video3.mp4', title: 'Uncompromising Quality', desc: 'Perfection in every dimension' },
-      { id: 'i9', type: 'image', src: 'image9.jpeg', title: 'Bespoke Interiors', desc: 'Tailored precisely for you' },
-      { id: 'i10', type: 'image', src: 'image10.jpeg', title: 'Dynamic Stance', desc: 'Ready for any journey' },
-      { id: 'i11', type: 'image', src: 'image11.jpeg', title: 'Premium Materials', desc: 'Only the finest selections' },
-      { id: 'i12', type: 'image', src: 'image12.jpeg', title: 'Masterpiece', desc: 'The ultimate expression of luxury' }
+      { id: 'v1', type: 'video', src: 'video1.mp4', title: 'Bespoke Experiences', desc: 'Immersive events curated for distinction' },
+      { id: 'i3', type: 'image', src: 'image3.jpeg', title: 'Floral Artistry', desc: 'Where nature meets sophisticated design' },
+      { id: 'i4', type: 'image', src: 'image4.jpeg', title: 'Timeless Elegance', desc: 'Crafting memories with passion and precision' },
+      { id: 'i5', type: 'image', src: 'image5.jpeg', title: 'Exquisite Details', desc: 'Every element tells your unique story' },
+      { id: 'v2', type: 'video', src: 'video2.mp4', title: 'Grand Receptions', desc: 'Unleashing the true potential of luxury spaces' },
+      { id: 'i6', type: 'image', src: 'image6.jpeg', title: 'Modern Luxury', desc: 'Redefining contemporary event styling' },
+      { id: 'i7', type: 'image', src: 'image7.jpeg', title: 'Classic Romance', desc: 'A timeless nod to glorious traditions' },
+      { id: 'i8', type: 'image', src: 'image8.jpeg', title: 'Corporate Excellence', desc: 'Innovation that moves your brand forward' },
+      { id: 'v3', type: 'video', src: 'video3.mp4', title: 'Uncompromising Quality', desc: 'Perfection in every event dimension' },
+      { id: 'i9', type: 'image', src: 'image9.jpeg', title: 'Bespoke Decor', desc: 'Atmospheres tailored precisely for you' },
+      { id: 'i10', type: 'image', src: 'image10.jpeg', title: 'Dynamic Lighting', desc: 'Setting the mood for any celebration' },
+      { id: 'i11', type: 'image', src: 'image11.jpeg', title: 'Premium Hospitality', desc: 'Only the finest culinary selections' },
+      { id: 'i12', type: 'image', src: 'image12.jpeg', title: 'Masterpiece Events', desc: 'The ultimate expression of African luxury' }
     ];
 
     let gLen = galleryItems.length;
