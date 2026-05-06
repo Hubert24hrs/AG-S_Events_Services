@@ -96,7 +96,9 @@
     background: rgba(10,10,10,0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    transition: background 0.3s;
   }
+  .nav-left, .nav-right { display: flex; align-items: center; gap: 1.5rem; }
   .nav-logo {
     font-family: 'Italiana', serif;
     font-size: 1.35rem;
@@ -104,16 +106,46 @@
     color: var(--gold);
     text-decoration: none;
   }
-  .nav-links {
-    display: flex; gap: 2.5rem; list-style: none;
+  .menu-btn, .theme-toggle {
+    background: transparent; border: none; cursor: none;
+    color: var(--ivory); display: flex; align-items: center; justify-content: center;
+    transition: color 0.3s; padding: 0.5rem;
   }
-  .nav-links a {
-    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(250,248,245,0.6); text-decoration: none;
-    transition: color 0.3s;
-    cursor: none;
+  .menu-btn:hover, .theme-toggle:hover { color: var(--gold); }
+  .menu-btn svg, .theme-toggle svg { width: 24px; height: 24px; }
+  
+  .theme-toggle .sun-icon { display: none; }
+  body.alt-theme .theme-toggle .moon-icon { display: none; }
+  body.alt-theme .theme-toggle .sun-icon { display: block; }
+
+  /* FULLSCREEN MENU OVERLAY */
+  .menu-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,10,10,0.98);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
   }
-  .nav-links a:hover { color: var(--gold); }
+  .menu-overlay.open { opacity: 1; pointer-events: auto; }
+  .menu-close {
+    position: absolute; top: 2rem; right: 4rem;
+    background: transparent; border: none; color: var(--ivory); cursor: none;
+    padding: 0.5rem; transition: color 0.3s;
+  }
+  .menu-close:hover { color: var(--gold); }
+  .menu-close svg { width: 32px; height: 32px; }
+  
+  .overlay-links {
+    list-style: none; text-align: center; display: flex; flex-direction: column; gap: 2rem;
+  }
+  .overlay-links a {
+    font-family: 'Italiana', serif;
+    font-size: 2.5rem; letter-spacing: 0.1em;
+    color: rgba(250,248,245,0.7); text-decoration: none;
+    transition: color 0.3s, transform 0.3s; display: block; cursor: none;
+  }
+  .overlay-links a:hover { color: var(--gold); transform: scale(1.05); }
+
   .nav-cta {
     font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
     padding: 0.65rem 1.6rem;
@@ -134,19 +166,49 @@
     overflow: hidden;
     z-index: 2;
   }
-  .hero-video-bg {
+  .dynamic-hero-grid {
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, #0A0A0A 0%, #1a1206 50%, #0A0A0A 100%);
+    display: grid;
+    grid-template-rows: 4fr 4fr 4fr;
+    grid-template-columns: 4fr 4fr 4fr;
+    gap: 4px;
+    background: #000;
+    transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1), grid-template-columns 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
+  }
+  .dynamic-frame {
+    position: relative;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--black-soft);
+  }
+  .dynamic-frame img, .dynamic-frame video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    transition: transform 0.6s ease;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .dynamic-frame:hover img, .dynamic-frame:hover video {
+    transform: scale(1);
+    opacity: 0.9;
   }
   .hero-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.75) 100%);
+    background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
+    z-index: 2; pointer-events: none;
   }
   .hero-content {
     position: relative; z-index: 3;
     text-align: center;
-    padding: 0 2rem;
+    padding: 4rem 3rem;
     max-width: 900px;
+    background: rgba(10, 10, 10, 0.35);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2rem;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
   }
   .hero-eyebrow {
     font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
@@ -367,49 +429,58 @@
     text-align: center; max-width: 600px; margin: 0 auto 4rem;
   }
   .services-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
     max-width: 1200px; margin: 0 auto;
+    position: relative;
+    perspective: 1000px;
   }
   .service-card {
     position: relative;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 2.5rem 2rem;
+    border-radius: 1rem;
+    padding: 3rem 2.5rem;
     overflow: hidden;
-    cursor: none;
-    transition: border-color 0.4s;
+    cursor: pointer;
+    transition: box-shadow 0.4s, border-color 0.4s;
+    transform-origin: center center;
+    will-change: transform;
+    text-decoration: none;
+    display: block;
   }
-  .service-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(184,134,11,0.08) 0%, transparent 60%);
-    opacity: 0; transition: opacity 0.4s;
-  }
-  .service-card:hover { border-color: rgba(184,134,11,0.5); }
-  .service-card:hover::before { opacity: 1; }
+  /* Unique Colors per Card */
+  .service-card:nth-child(1) { background: linear-gradient(145deg, rgba(138,43,226,0.1), #0A0A0A); border: 1px solid rgba(138,43,226,0.2); }
+  .service-card:nth-child(2) { background: linear-gradient(145deg, rgba(226,43,101,0.1), #0A0A0A); border: 1px solid rgba(226,43,101,0.2); }
+  .service-card:nth-child(3) { background: linear-gradient(145deg, rgba(43,180,226,0.1), #0A0A0A); border: 1px solid rgba(43,180,226,0.2); }
+  .service-card:nth-child(4) { background: linear-gradient(145deg, rgba(226,195,43,0.1), #0A0A0A); border: 1px solid rgba(226,195,43,0.2); }
+  .service-card:nth-child(5) { background: linear-gradient(145deg, rgba(43,226,104,0.1), #0A0A0A); border: 1px solid rgba(43,226,104,0.2); }
+  .service-card:nth-child(6) { background: linear-gradient(145deg, rgba(255,255,255,0.05), #0A0A0A); border: 1px solid rgba(255,255,255,0.1); }
+  
+  .service-card:hover { border-color: var(--gold); z-index: 10; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+  
   .service-icon {
-    font-size: 1.8rem; margin-bottom: 1.2rem;
-    display: block; opacity: 0.7;
+    font-size: 3.5rem; margin-bottom: 1.5rem;
+    display: inline-block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+    transition: transform 0.4s ease;
   }
+  .service-card:hover .service-icon { transform: scale(1.1) rotate(5deg); }
+  
   .service-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem; font-weight: 400; color: var(--ivory);
-    margin-bottom: 0.7rem;
-    transition: color 0.3s;
+    font-family: 'Italiana', serif;
+    font-size: 2rem; font-weight: 400; color: var(--ivory);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
   }
-  .service-card:hover .service-name { color: var(--gold-light); }
   .service-desc {
-    font-size: 0.8rem; line-height: 1.7; font-weight: 300;
-    color: rgba(250,248,245,0.45);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: rgba(250,248,245,0.7);
+    line-height: 1.5; font-style: italic;
   }
   .service-arrow {
-    position: absolute; bottom: 2rem; right: 2rem;
-    font-size: 1.2rem; color: var(--gold);
-    opacity: 0; transform: translateX(-8px);
-    transition: opacity 0.3s, transform 0.3s;
+    position: absolute; bottom: 2.5rem; right: 2.5rem;
+    font-size: 1.5rem; color: var(--ivory); opacity: 0; transform: translateX(-15px);
+    transition: all 0.4s;
   }
-  .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
+  .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); color: var(--gold); }
 
   /* GALLERY PREVIEW */
   .gallery-section {
@@ -648,6 +719,56 @@
   }
   .arrow-button svg { width: 1.2rem; height: 1.2rem; fill: currentColor; }
 
+  /* EVENTS SECTION */
+  .events-section {
+    padding: 8rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .events-header { text-align: center; margin-bottom: 4rem; }
+  .events-list {
+    display: flex; flex-direction: column; gap: 1.5rem;
+  }
+  .event-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2rem 0; border-bottom: 1px solid rgba(184,134,11,0.2);
+    transition: background 0.3s;
+  }
+  .event-row:hover { background: rgba(184,134,11,0.03); }
+  .event-date { font-family: 'Italiana', serif; font-size: 1.5rem; color: var(--gold); min-width: 150px; }
+  .event-details { flex-grow: 1; padding: 0 2rem; }
+  .event-name { font-size: 1.25rem; font-family: 'Cormorant Garamond', serif; color: var(--ivory); font-weight: 500; margin-bottom: 0.3rem; }
+  .event-loc { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+  .event-link {
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ivory);
+    text-decoration: none; border: 1px solid var(--ivory); padding: 0.5rem 1rem; border-radius: 999px;
+    transition: all 0.3s;
+  }
+  .event-row:hover .event-link { background: var(--gold); border-color: var(--gold); color: var(--black); }
+
+  /* NEWS SECTION */
+  .news-section {
+    padding: 8rem 4rem;
+    background: var(--panel);
+  }
+  .news-header { text-align: center; margin-bottom: 4rem; }
+  .news-grid {
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  .news-card {
+    background: rgba(10,10,10,0.6); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 1rem; overflow: hidden; transition: transform 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .news-card:hover { transform: translateY(-5px); }
+  .news-img { width: 100%; height: 200px; object-fit: cover; }
+  .news-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+  .news-region { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; font-weight: bold; }
+  .news-title { font-size: 1.1rem; font-family: 'DM Sans', sans-serif; color: white; margin-bottom: 1rem; line-height: 1.4; }
+  .news-excerpt { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 1.5rem; line-height: 1.6; flex-grow: 1; }
+  .news-meta { font-size: 0.75rem; color: rgba(255,255,255,0.4); display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
+
   /* CTA BANNER */
   .cta-section {
     padding: 8rem 4rem;
@@ -807,22 +928,52 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">AG'S EVENT SERVICES</a>
-  <ul class="nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Services</a></li>
-    <li><a href="#">Gallery</a></li>
-    <li><a href="#">Events</a></li>
-    <li><a href="#">Blog</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
-  <button class="nav-cta">Book Appointment</button>
+  <div class="nav-left">
+    <button class="menu-btn" id="menu-toggle" aria-label="Open Menu">
+      <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <a class="nav-logo" href="#">AG'S EVENT SERVICES</a>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="nav-cta">Book Appointment</button>
+  </div>
 </nav>
+
+<!-- FULLSCREEN MENU OVERLAY -->
+<div class="menu-overlay" id="menu-overlay">
+  <button class="menu-close" id="menu-close" aria-label="Close Menu">
+    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <ul class="overlay-links">
+    <li><a href="#" class="overlay-link">Home</a></li>
+    <li><a href="#about-section" class="overlay-link">About</a></li>
+    <li><a href="#services-section" class="overlay-link">Services</a></li>
+    <li><a href="#gallery-section" class="overlay-link">Gallery</a></li>
+    <li><a href="#events-section" class="overlay-link">Event</a></li>
+    <li><a href="#news-section" class="overlay-link">Event News</a></li>
+    <li><a href="#footer" class="overlay-link">Contact</a></li>
+  </ul>
+</div>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-video-bg"></div>
+  <div class="dynamic-hero-grid" id="dynamic-hero-grid">
+    <div class="dynamic-frame"><video src="https://assets.mixkit.co/videos/preview/mixkit-wedding-reception-table-setting-49996-large.mp4" autoplay loop muted playsinline></video></div>
+    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80" alt="Luxury Dining"></div>
+    <div class="dynamic-frame"><video src="https://assets.mixkit.co/videos/preview/mixkit-bride-and-groom-cheering-with-champagne-49850-large.mp4" autoplay loop muted playsinline></video></div>
+    
+    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80" alt="Gala Setup"></div>
+    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80" alt="Event Hall"></div>
+    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80" alt="Corporate Meeting"></div>
+    
+    <div class="dynamic-frame"><video src="https://assets.mixkit.co/videos/preview/mixkit-guests-dancing-at-a-wedding-reception-49991-large.mp4" autoplay loop muted playsinline></video></div>
+    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&q=80" alt="Party Setup"></div>
+    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&q=80" alt="Wedding Flowers"></div>
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">Nigeria's Premier Luxury Event Experience</div>
@@ -907,49 +1058,50 @@
 </section>
 
 <!-- SERVICES -->
-<section class="services-section">
+<section class="services-section" id="services-section">
   <div class="services-header">
     <span class="section-tag reveal">What We Do</span>
     <h2 class="section-title reveal reveal-delay-1">Our <em>Signature</em> Services</h2>
-    <p class="section-body reveal reveal-delay-2" style="font-size:0.85rem;">Every service is delivered with the meticulous attention to detail and elevated standard that defines the AG's experience.</p>
+    <p class="section-body reveal reveal-delay-2" style="font-size:0.85rem;">Every service is delivered with meticulous attention to detail and the elevated standard that defines the AG's experience. Move your mouse to explore.</p>
   </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
+  
+  <div class="services-grid" id="mac-dock-grid">
+    <a href="#weddings" class="service-card reveal">
       <span class="service-icon">💍</span>
       <div class="service-name">Weddings</div>
       <p class="service-desc">Transforming your love story into an unforgettable celebration — from intimate ceremonies to grand receptions crafted with timeless elegance.</p>
       <div class="service-arrow">→</div>
-    </div>
-    <div class="service-card reveal reveal-delay-1">
+    </a>
+    <a href="#birthdays" class="service-card reveal reveal-delay-1">
       <span class="service-icon">🎂</span>
       <div class="service-name">Birthdays</div>
       <p class="service-desc">Milestone celebrations designed to reflect personality and grandeur, creating moments you'll treasure for a lifetime.</p>
       <div class="service-arrow">→</div>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
+    </a>
+    <a href="#corporate" class="service-card reveal reveal-delay-2">
       <span class="service-icon">🏛️</span>
       <div class="service-name">Corporate Events</div>
       <p class="service-desc">Professional gatherings that inspire and impress — conferences, product launches, and executive retreats executed flawlessly.</p>
       <div class="service-arrow">→</div>
-    </div>
-    <div class="service-card reveal reveal-delay-3">
+    </a>
+    <a href="#galas" class="service-card reveal reveal-delay-3">
       <span class="service-icon">🌟</span>
       <div class="service-name">Galas & Parties</div>
       <p class="service-desc">Spectacular evening events where luxury meets entertainment, curated for those who celebrate with distinction.</p>
       <div class="service-arrow">→</div>
-    </div>
-    <div class="service-card reveal reveal-delay-4">
+    </a>
+    <a href="#conferences" class="service-card reveal reveal-delay-4">
       <span class="service-icon">🎤</span>
       <div class="service-name">Conferences</div>
       <p class="service-desc">End-to-end conference management delivering seamless experiences — from intimate seminars to large-scale conventions.</p>
       <div class="service-arrow">→</div>
-    </div>
-    <div class="service-card reveal reveal-delay-5">
+    </a>
+    <a href="#memorials" class="service-card reveal reveal-delay-5">
       <span class="service-icon">🕊️</span>
       <div class="service-name">Burials & Memorials</div>
       <p class="service-desc">Dignified, compassionate tributes that honour lives with grace and beauty — managed with the utmost sensitivity and care.</p>
       <div class="service-arrow">→</div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -1013,6 +1165,52 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- EVENTS SECTION -->
+<section class="events-section" id="events-section">
+  <div class="events-header">
+    <span class="section-tag reveal">Upcoming Events</span>
+    <h2 class="section-title reveal reveal-delay-1">Where We're <em>Heading</em></h2>
+  </div>
+  <div class="events-list reveal reveal-delay-2">
+    <div class="event-row">
+      <div class="event-date">Oct 12, 2026</div>
+      <div class="event-details">
+        <h3 class="event-name">Lagos Luxury Summit</h3>
+        <p class="event-loc">Eko Hotel & Suites, Victoria Island</p>
+      </div>
+      <a href="#" class="event-link">Details</a>
+    </div>
+    <div class="event-row">
+      <div class="event-date">Nov 5, 2026</div>
+      <div class="event-details">
+        <h3 class="event-name">Abuja Gala Dinner</h3>
+        <p class="event-loc">Transcorp Hilton, Abuja</p>
+      </div>
+      <a href="#" class="event-link">Details</a>
+    </div>
+    <div class="event-row">
+      <div class="event-date">Dec 20, 2026</div>
+      <div class="event-details">
+        <h3 class="event-name">Port Harcourt End of Year Bash</h3>
+        <p class="event-loc">Presidential Hotel, Port Harcourt</p>
+      </div>
+      <a href="#" class="event-link">Details</a>
+    </div>
+  </div>
+</section>
+
+<!-- EVENT NEWS SECTION -->
+<section class="news-section" id="news-section">
+  <div class="news-header">
+    <span class="section-tag reveal">Industry Updates</span>
+    <h2 class="section-title reveal reveal-delay-1">Global Event <em>News</em></h2>
+    <p class="reveal reveal-delay-2" style="font-size:0.85rem; color:rgba(255,255,255,0.5); max-width:500px; margin: 1rem auto 0;">Live feed of luxury event news worldwide, strictly curated for our premium clientele.</p>
+  </div>
+  <div class="news-grid reveal reveal-delay-3" id="news-grid">
+    <!-- JS will populate news cards here -->
   </div>
 </section>
 
@@ -1733,6 +1931,157 @@
 
     updateGallery();
     resetGInterval();
+  }
+
+  // NAVIGATION & THEME LOGIC
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const overlayLinks = document.querySelectorAll('.overlay-link');
+  const themeToggle = document.getElementById('theme-toggle');
+
+  if (menuToggle && menuClose && menuOverlay) {
+    menuToggle.addEventListener('click', () => menuOverlay.classList.add('open'));
+    menuClose.addEventListener('click', () => menuOverlay.classList.remove('open'));
+    overlayLinks.forEach(link => {
+      link.addEventListener('click', () => menuOverlay.classList.remove('open'));
+    });
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('alt-theme');
+    });
+  }
+
+  // EVENT NEWS MOCK API
+  const fetchEventNews = () => {
+    const newsGrid = document.getElementById('news-grid');
+    if (!newsGrid) return;
+    
+    // Distribution: 12 NG (60%), 4 US (20%), 1 AS (5%), 1 EU (5%), 2 OTHER (10%)
+    const mockData = [
+      { region: 'Nigeria', title: 'Lagos Fashion Week Returns with Unprecedented Luxury', excerpt: 'The continent\'s premier fashion event announces its 2026 dates, promising exclusive VIP showcases.', img: 'media__1778023983849.jpg' },
+      { region: 'Nigeria', title: 'Abuja Elite Polo Tournament Draws Global Crowd', excerpt: 'High society gathers in the capital for the annual charity polo match, featuring bespoke hospitality pavilions.', img: 'media__1778023992776.jpg' },
+      { region: 'Nigeria', title: 'Eko Atlantic Set to Host Largest Tech Gala', excerpt: 'Tech billionaires and innovators prepare for the most anticipated networking gala of the decade.', img: 'media__1778023983849.jpg' },
+      { region: 'Nigeria', title: 'Port Harcourt Refinery Commissioning Ball', excerpt: 'An exclusive black-tie event celebrating the new era of energy independence.', img: 'media__1778023992776.jpg' },
+      { region: 'Nigeria', title: 'Osun Osogbo Festival Elevates VIP Experience', excerpt: 'Cultural heritage meets modern luxury as organizers introduce premium viewing tiers.', img: 'media__1778023983849.jpg' },
+      { region: 'Nigeria', title: 'Enugu Coal City Investment Dinner', excerpt: 'South East governors host foreign investors in a spectacularly curated night of culture and commerce.', img: 'media__1778023992776.jpg' },
+      { region: 'Nigeria', title: 'Calabar Carnival Announces Platinum Packages', excerpt: 'Africa\'s biggest street party introduces exclusive yacht and balcony packages for 2026.', img: 'media__1778023983849.jpg' },
+      { region: 'Nigeria', title: 'Kano Durbar Festival Royal Pavilion', excerpt: 'The historic equestrian parade will feature a newly designed luxury viewing pavilion for dignitaries.', img: 'media__1778023992776.jpg' },
+      { region: 'Nigeria', title: 'Lekki Yacht Club Inaugural Regatta', excerpt: 'A fleet of luxury vessels lines up for the first-ever high-stakes regatta on the Lagos lagoon.', img: 'media__1778023983849.jpg' },
+      { region: 'Nigeria', title: 'Ibadan Tech Hub Launch Party', excerpt: 'The ancient city welcomes modern innovation with a breathtaking drone show and gala.', img: 'media__1778023992776.jpg' },
+      { region: 'Nigeria', title: 'Asaba Nollywood Awards Night', excerpt: 'The stars descend on Delta State for a night of glitz, glamour, and cinematic excellence.', img: 'media__1778023983849.jpg' },
+      { region: 'Nigeria', title: 'Victoria Island Art Exhibition', excerpt: 'Contemporary African art takes center stage in an exclusive, invite-only gallery night.', img: 'media__1778023992776.jpg' },
+      
+      { region: 'USA', title: 'Met Gala 2026 Theme Revealed', excerpt: 'Fashion\'s biggest night out announces its highly anticipated theme, setting the stage for extravagant designs.', img: 'media__1778023983849.jpg' },
+      { region: 'USA', title: 'Coachella Introduces Ultra-VIP Desert Oasis', excerpt: 'The music festival redefines luxury with air-conditioned private villas and personal concierges.', img: 'media__1778023992776.jpg' },
+      { region: 'USA', title: 'Oscars After-Party Moves to New Hollywood Venue', excerpt: 'The iconic Vanity Fair party upgrades to a sprawling, multi-level estate for unprecedented privacy.', img: 'media__1778023983849.jpg' },
+      { region: 'USA', title: 'Miami Art Basel Breaking Sales Records', excerpt: 'Exclusive previews see record-breaking contemporary art sales amidst lavish beachfront parties.', img: 'media__1778023992776.jpg' },
+
+      { region: 'Asia', title: 'Singapore Grand Prix Paddock Club Overhaul', excerpt: 'The night race elevates its hospitality game with a multi-million dollar redesign of the VIP suites.', img: 'media__1778023983849.jpg' },
+
+      { region: 'Europe', title: 'Cannes Film Festival Red Carpet Logistics', excerpt: 'Behind the scenes of orchestrating the world\'s most glamorous and tightly secured film premiere.', img: 'media__1778023992776.jpg' },
+
+      { region: 'Global', title: 'Dubai Desert Royal Wedding Sets New Standard', excerpt: 'A custom-built oasis hosted the year\'s most opulent private celebration.', img: 'media__1778023983849.jpg' },
+      { region: 'Global', title: 'Sydney New Year\'s Eve Harbor VIP Cruise', excerpt: 'Demand surges for ultra-luxury yacht charters ahead of the iconic firework display.', img: 'media__1778023992776.jpg' }
+    ];
+
+    // Shuffle the array to mix regions naturally
+    for (let i = mockData.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [mockData[i], mockData[j]] = [mockData[j], mockData[i]];
+    }
+
+    mockData.forEach(news => {
+      const card = document.createElement('div');
+      card.className = 'news-card';
+      card.innerHTML = `
+        <img src="${news.img}" alt="${news.title}" class="news-img" loading="lazy">
+        <div class="news-content">
+          <div class="news-region">${news.region}</div>
+          <h3 class="news-title">${news.title}</h3>
+          <p class="news-excerpt">${news.excerpt}</p>
+          <div class="news-meta">
+            <span>AG's Event Desk</span>
+            <span>May 2026</span>
+          </div>
+        </div>
+      `;
+      newsGrid.appendChild(card);
+    });
+  };
+
+  fetchEventNews();
+
+  // MAC OS SCALING FOR SERVICE CARDS
+  const grid = document.getElementById('mac-dock-grid');
+  if (grid) {
+    const cards = Array.from(grid.querySelectorAll('.service-card'));
+    const maxScale = 1.08;
+    const distanceThreshold = 350; // pixels
+    
+    grid.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const cardCenterX = rect.left + rect.width / 2;
+        const cardCenterY = rect.top + rect.height / 2;
+        
+        const distanceX = Math.abs(clientX - cardCenterX);
+        const distanceY = Math.abs(clientY - cardCenterY);
+        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        
+        let scale = 1;
+        if (distance < distanceThreshold) {
+          const normalizedDist = distance / distanceThreshold;
+          const scaleFactor = Math.cos(normalizedDist * Math.PI / 2);
+          scale = 1 + (maxScale - 1) * scaleFactor;
+        }
+        
+        card.style.transform = `scale(${scale})`;
+        card.style.zIndex = scale > 1.01 ? 10 : 1;
+      });
+    });
+    
+    grid.addEventListener('mouseleave', () => {
+      cards.forEach(card => {
+        card.style.transform = `scale(1)`;
+        card.style.zIndex = 1;
+      });
+    });
+  }
+
+  // DYNAMIC HERO GRID LOGIC
+  const heroSection = document.getElementById('hero');
+  const dynamicGrid = document.getElementById('dynamic-hero-grid');
+  
+  if (heroSection && dynamicGrid) {
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      let col = Math.floor((x / rect.width) * 3);
+      let row = Math.floor((y / rect.height) * 3);
+      
+      col = Math.max(0, Math.min(2, col));
+      row = Math.max(0, Math.min(2, row));
+      
+      const hoverSize = 6;
+      const nonHoverSize = 3;
+      
+      const rows = [0, 1, 2].map(r => r === row ? `${hoverSize}fr` : `${nonHoverSize}fr`).join(' ');
+      const cols = [0, 1, 2].map(c => c === col ? `${hoverSize}fr` : `${nonHoverSize}fr`).join(' ');
+      
+      dynamicGrid.style.gridTemplateRows = rows;
+      dynamicGrid.style.gridTemplateColumns = cols;
+    });
+    
+    heroSection.addEventListener('mouseleave', () => {
+      dynamicGrid.style.gridTemplateRows = '4fr 4fr 4fr';
+      dynamicGrid.style.gridTemplateColumns = '4fr 4fr 4fr';
+    });
   }
 })();
 </script>
