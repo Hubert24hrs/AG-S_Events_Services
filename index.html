@@ -420,51 +420,123 @@
     display: flex; align-items: flex-end; justify-content: space-between;
     margin-bottom: 3rem;
   }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 280px 280px;
-    gap: 1rem;
-  }
-  .gallery-item {
-    position: relative; overflow: hidden; cursor: none;
-    background: #1a1206;
-    border: 1px solid rgba(184,134,11,0.1);
-  }
-  .gallery-item:first-child { grid-row: 1 / 3; }
-  .gallery-inner {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, #1a1206, #2a1f0a, #141008);
+  /* CARD STACK GALLERY */
+  .card-stack-container {
+    width: 100%;
     position: relative;
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .gallery-item:hover .gallery-inner { transform: scale(1.05); }
-  .gallery-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%);
-    opacity: 0; transition: opacity 0.3s;
-    display: flex; align-items: flex-end; padding: 1.5rem;
+  .card-stack-stage {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    outline: none;
   }
-  .gallery-item:hover .gallery-overlay { opacity: 1; }
-  .gallery-cat {
-    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 0.3rem;
+  .card-stack-wash-top {
+    position: absolute;
+    top: 1.5rem; left: 0; right: 0; margin: 0 auto;
+    height: 12rem; width: 70%;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.05);
+    filter: blur(48px);
+    pointer-events: none;
   }
-  .gallery-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; color: var(--ivory);
+  .card-stack-wash-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0; margin: 0 auto;
+    height: 10rem; width: 76%;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.3);
+    filter: blur(48px);
+    pointer-events: none;
   }
-  .gallery-pattern {
-    position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(
-      0deg, transparent, transparent 40px,
-      rgba(184,134,11,0.06) 40px, rgba(184,134,11,0.06) 41px
-    ),
-    repeating-linear-gradient(
-      90deg, transparent, transparent 40px,
-      rgba(184,134,11,0.06) 40px, rgba(184,134,11,0.06) 41px
-    );
+  .card-stack-cards {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    perspective: 1100px;
   }
+  .card-stack-item {
+    position: absolute;
+    bottom: 0;
+    width: 520px;
+    height: 320px;
+    border-radius: 1.5rem;
+    border: 4px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    user-select: none;
+    will-change: transform;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
+    cursor: pointer;
+    background: var(--black-soft);
+  }
+  @media (max-width: 600px) {
+    .card-stack-item { width: 90%; height: 260px; }
+    .card-stack-stage { height: 400px; }
+  }
+  .card-stack-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+  }
+  .card-stack-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+  .card-stack-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .card-stack-content {
+    position: absolute;
+    z-index: 10;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .card-stack-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .card-stack-desc {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.8);
+    margin-top: 0.25rem;
+  }
+  .card-stack-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  .card-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    border: none; outline: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .card-dot.active { background: white; }
+  .card-dot:hover { background: rgba(255,255,255,0.6); }
 
   /* CIRCULAR TESTIMONIALS */
   .testimonials-section {
@@ -889,76 +961,21 @@
     </div>
     <a href="#" class="view-all reveal reveal-delay-2">View Full Gallery</a>
   </div>
-  <div class="gallery-grid reveal">
-    <div class="gallery-item">
-      <div class="gallery-inner" style="background:linear-gradient(160deg,#1f1608,#2e1e0a,#120c04);">
-        <div class="gallery-pattern"></div>
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(184,134,11,0.3);letter-spacing:0.2em;text-transform:uppercase;">Weddings</div>
-        </div>
-      </div>
-      <div class="gallery-overlay">
-        <div>
-          <div class="gallery-cat">Wedding</div>
-          <div class="gallery-title">The Okonkwo–Adeyemi Ceremony</div>
-        </div>
+  <div class="card-stack-container reveal">
+    <div class="card-stack-stage" id="gallery-card-stage" tabindex="0">
+      <!-- Background washes -->
+      <div class="card-stack-wash-top"></div>
+      <div class="card-stack-wash-bottom"></div>
+      
+      <!-- Cards Container -->
+      <div class="card-stack-cards" id="gallery-cards">
+        <!-- JS will populate cards -->
       </div>
     </div>
-    <div class="gallery-item">
-      <div class="gallery-inner" style="background:linear-gradient(160deg,#0e1820,#1a2535,#080f18);">
-        <div class="gallery-pattern"></div>
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:rgba(184,134,11,0.3);letter-spacing:0.2em;text-transform:uppercase;">Corporate</div>
-        </div>
-      </div>
-      <div class="gallery-overlay">
-        <div>
-          <div class="gallery-cat">Corporate</div>
-          <div class="gallery-title">Zenith Annual Gala 2024</div>
-        </div>
-      </div>
-    </div>
-    <div class="gallery-item">
-      <div class="gallery-inner" style="background:linear-gradient(160deg,#1a0e20,#2a1535,#100818);">
-        <div class="gallery-pattern"></div>
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:rgba(184,134,11,0.3);letter-spacing:0.2em;text-transform:uppercase;">Birthday</div>
-        </div>
-      </div>
-      <div class="gallery-overlay">
-        <div>
-          <div class="gallery-cat">Birthday</div>
-          <div class="gallery-title">The Grand 50th Celebration</div>
-        </div>
-      </div>
-    </div>
-    <div class="gallery-item">
-      <div class="gallery-inner" style="background:linear-gradient(160deg,#201508,#352215,#120c04);">
-        <div class="gallery-pattern"></div>
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:rgba(184,134,11,0.3);letter-spacing:0.2em;text-transform:uppercase;">Gala</div>
-        </div>
-      </div>
-      <div class="gallery-overlay">
-        <div>
-          <div class="gallery-cat">Gala</div>
-          <div class="gallery-title">Diamond Awards Night</div>
-        </div>
-      </div>
-    </div>
-    <div class="gallery-item">
-      <div class="gallery-inner" style="background:linear-gradient(160deg,#0a1810,#122515,#060f08);">
-        <div class="gallery-pattern"></div>
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:rgba(184,134,11,0.3);letter-spacing:0.2em;text-transform:uppercase;">Conference</div>
-        </div>
-      </div>
-      <div class="gallery-overlay">
-        <div>
-          <div class="gallery-cat">Conference</div>
-          <div class="gallery-title">West Africa Summit 2024</div>
-        </div>
-      </div>
+    
+    <!-- Dots Navigation -->
+    <div class="card-stack-dots" id="gallery-dots">
+      <!-- JS will populate dots -->
     </div>
   </div>
 </section>
@@ -1554,6 +1571,176 @@
       updateTestimonials();
       resetInterval();
     });
+  }
+  // CARD STACK GALLERY
+  const galleryCardsContainer = document.getElementById('gallery-cards');
+  const galleryDotsContainer = document.getElementById('gallery-dots');
+  
+  if (galleryCardsContainer && galleryDotsContainer) {
+    const galleryItems = [
+      { id: 'v1', type: 'video', src: 'video1.mp4', title: 'Luxury Performance', desc: 'Experience the thrill of precision engineering' },
+      { id: 'i3', type: 'image', src: 'image3.jpeg', title: 'Elegant Design', desc: 'Where beauty meets functionality' },
+      { id: 'i4', type: 'image', src: 'image4.jpeg', title: 'Timeless Craftsmanship', desc: 'Built with passion, driven by excellence' },
+      { id: 'i5', type: 'image', src: 'image5.jpeg', title: 'Exquisite Details', desc: 'Every stitch tells a story' },
+      { id: 'v2', type: 'video', src: 'video2.mp4', title: 'Power & Speed', desc: 'Unleash the true potential' },
+      { id: 'i6', type: 'image', src: 'image6.jpeg', title: 'Modern Aesthetics', desc: 'Redefining contemporary style' },
+      { id: 'i7', type: 'image', src: 'image7.jpeg', title: 'Classic Lines', desc: 'A nod to the glorious past' },
+      { id: 'i8', type: 'image', src: 'image8.jpeg', title: 'Future of Mobility', desc: 'Innovation that moves you forward' },
+      { id: 'v3', type: 'video', src: 'video3.mp4', title: 'Uncompromising Quality', desc: 'Perfection in every dimension' },
+      { id: 'i9', type: 'image', src: 'image9.jpeg', title: 'Bespoke Interiors', desc: 'Tailored precisely for you' },
+      { id: 'i10', type: 'image', src: 'image10.jpeg', title: 'Dynamic Stance', desc: 'Ready for any journey' },
+      { id: 'i11', type: 'image', src: 'image11.jpeg', title: 'Premium Materials', desc: 'Only the finest selections' },
+      { id: 'i12', type: 'image', src: 'image12.jpeg', title: 'Masterpiece', desc: 'The ultimate expression of luxury' }
+    ];
+
+    let gLen = galleryItems.length;
+    let gActive = 0;
+    let gHovering = false;
+    let gInterval;
+
+    // Build DOM elements
+    galleryItems.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'card-stack-item';
+      
+      const inner = document.createElement('div');
+      inner.className = 'card-stack-inner';
+      
+      let media;
+      if (item.type === 'video') {
+        media = document.createElement('video');
+        media.src = item.src;
+        media.className = 'card-stack-media';
+        media.muted = true;
+        media.loop = true;
+        media.playsInline = true;
+      } else {
+        media = document.createElement('img');
+        media.src = item.src;
+        media.className = 'card-stack-media';
+        media.alt = item.title;
+      }
+      
+      const overlay = document.createElement('div');
+      overlay.className = 'card-stack-overlay';
+      
+      const content = document.createElement('div');
+      content.className = 'card-stack-content';
+      content.innerHTML = `<div class="card-stack-title">${item.title}</div><div class="card-stack-desc">${item.desc}</div>`;
+      
+      inner.appendChild(media);
+      inner.appendChild(overlay);
+      inner.appendChild(content);
+      card.appendChild(inner);
+      
+      card.addEventListener('click', () => {
+        gActive = i;
+        updateGallery();
+        resetGInterval();
+      });
+      
+      galleryCardsContainer.appendChild(card);
+      
+      const dot = document.createElement('button');
+      dot.className = 'card-dot';
+      dot.addEventListener('click', () => {
+        gActive = i;
+        updateGallery();
+        resetGInterval();
+      });
+      galleryDotsContainer.appendChild(dot);
+    });
+
+    const gCards = galleryCardsContainer.querySelectorAll('.card-stack-item');
+    const gDots = galleryDotsContainer.querySelectorAll('.card-dot');
+
+    function signedOffset(i, active, len) {
+      const raw = i - active;
+      if (len <= 1) return raw;
+      const alt = raw > 0 ? raw - len : raw + len;
+      return Math.abs(alt) < Math.abs(raw) ? alt : raw;
+    }
+
+    function updateGallery() {
+      const maxVisible = 7;
+      const maxOffset = Math.floor(maxVisible / 2);
+      const cardWidth = window.innerWidth < 600 ? window.innerWidth * 0.9 : 520;
+      const overlap = 0.48;
+      const spreadDeg = 48;
+      const cardSpacing = Math.max(10, Math.round(cardWidth * (1 - overlap)));
+      const stepDeg = maxOffset > 0 ? spreadDeg / maxOffset : 0;
+      const depthPx = 140;
+      const activeLiftPx = 22;
+      const activeScale = 1.03;
+      const inactiveScale = 0.94;
+      const tiltXDeg = 12;
+
+      gCards.forEach((card, i) => {
+        const off = signedOffset(i, gActive, gLen);
+        const abs = Math.abs(off);
+        const visible = abs <= maxOffset;
+
+        if (!visible) {
+          card.style.opacity = 0;
+          card.style.pointerEvents = 'none';
+          const vid = card.querySelector('video');
+          if (vid) vid.pause();
+          return;
+        }
+
+        card.style.opacity = 1;
+        card.style.pointerEvents = 'auto';
+
+        const rotateZ = off * stepDeg;
+        const x = off * cardSpacing;
+        const y = abs * 10;
+        const z = -abs * depthPx;
+
+        const isActive = off === 0;
+        const scale = isActive ? activeScale : inactiveScale;
+        const lift = isActive ? -activeLiftPx : 0;
+        const rotateX = isActive ? 0 : tiltXDeg;
+        const zIndex = 100 - abs;
+
+        card.style.zIndex = zIndex;
+        card.style.transform = `translateX(${x}px) translateY(${y + lift}px) translateZ(${z}px) rotateZ(${rotateZ}deg) rotateX(${rotateX}deg) scale(${scale})`;
+
+        const vid = card.querySelector('video');
+        if (vid) {
+          if (isActive) {
+            // Need a tiny delay for DOM rendering sometimes to prevent play() interruption
+            setTimeout(() => { vid.play().catch(e => console.log('Autoplay blocked')); }, 50);
+          } else {
+            vid.pause();
+          }
+        }
+      });
+
+      gDots.forEach((dot, i) => {
+        dot.className = i === gActive ? 'card-dot active' : 'card-dot';
+      });
+    }
+
+    const nextGallery = () => {
+      gActive = (gActive + 1) % gLen;
+      updateGallery();
+    };
+
+    const resetGInterval = () => {
+      clearInterval(gInterval);
+      gInterval = setInterval(() => {
+        if (!gHovering) nextGallery();
+      }, 3000);
+    };
+
+    document.getElementById('gallery-card-stage').addEventListener('mouseenter', () => gHovering = true);
+    document.getElementById('gallery-card-stage').addEventListener('mouseleave', () => gHovering = false);
+    
+    // Recalculate widths on resize
+    window.addEventListener('resize', () => { updateGallery(); });
+
+    updateGallery();
+    resetGInterval();
   }
 })();
 </script>
