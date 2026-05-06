@@ -949,7 +949,7 @@
     <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
   </button>
   <ul class="overlay-links">
-    <li><a href="#" class="overlay-link">Home</a></li>
+    <li><a href="#hero" class="overlay-link">Home</a></li>
     <li><a href="#about-section" class="overlay-link">About</a></li>
     <li><a href="#services-section" class="overlay-link">Services</a></li>
     <li><a href="#gallery-section" class="overlay-link">Gallery</a></li>
@@ -962,17 +962,17 @@
 <!-- HERO -->
 <section id="hero">
   <div class="dynamic-hero-grid" id="dynamic-hero-grid">
-    <div class="dynamic-frame"><video src="https://assets.mixkit.co/videos/preview/mixkit-wedding-reception-table-setting-49996-large.mp4" autoplay loop muted playsinline></video></div>
-    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80" alt="Luxury Dining"></div>
-    <div class="dynamic-frame"><video src="https://assets.mixkit.co/videos/preview/mixkit-bride-and-groom-cheering-with-champagne-49850-large.mp4" autoplay loop muted playsinline></video></div>
+    <div class="dynamic-frame"><video src="video1.mp4" autoplay loop muted playsinline></video></div>
+    <div class="dynamic-frame"><img src="african_luxury_wedding_1778034678359.png" alt="Luxury Wedding"></div>
+    <div class="dynamic-frame"><video src="video2.mp4" autoplay loop muted playsinline></video></div>
     
-    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80" alt="Gala Setup"></div>
-    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80" alt="Event Hall"></div>
-    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80" alt="Corporate Meeting"></div>
+    <div class="dynamic-frame"><img src="image4.jpeg" alt="AG Event"></div>
+    <div class="dynamic-frame"><img src="african_corporate_gala_1778034700184.png" alt="Corporate Gala"></div>
+    <div class="dynamic-frame"><img src="image6.jpeg" alt="AG Event"></div>
     
-    <div class="dynamic-frame"><video src="https://assets.mixkit.co/videos/preview/mixkit-guests-dancing-at-a-wedding-reception-49991-large.mp4" autoplay loop muted playsinline></video></div>
-    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&q=80" alt="Party Setup"></div>
-    <div class="dynamic-frame"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&q=80" alt="Wedding Flowers"></div>
+    <div class="dynamic-frame"><video src="video3.mp4" autoplay loop muted playsinline></video></div>
+    <div class="dynamic-frame"><img src="african_traditional_celebration_1778034722051.png" alt="Traditional Celebration"></div>
+    <div class="dynamic-frame"><img src="image8.jpeg" alt="AG Event"></div>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -1013,7 +1013,7 @@
 </div>
 
 <!-- ABOUT TEASER -->
-<section>
+<section id="about-section">
   <div class="about-section">
     <div class="about-image-side reveal">
       <div class="about-images-wrapper">
@@ -1106,7 +1106,7 @@
 </section>
 
 <!-- GALLERY PREVIEW -->
-<section class="gallery-section">
+<section class="gallery-section" id="gallery-section">
   <div class="gallery-header">
     <div>
       <span class="section-tag reveal">Our Work</span>
@@ -1255,9 +1255,9 @@
       <ul class="footer-links">
         <li><a href="#">About Us</a></li>
         <li><a href="#">Gallery</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="#events-section">Events</a></li>
+        <li><a href="#news-section">Event News</a></li>
+        <li><a href="#footer">Contact</a></li>
       </ul>
     </div>
     <div>
@@ -1302,6 +1302,22 @@
     loader.style.opacity = '0';
     setTimeout(function() { loader.style.display = 'none'; }, 800);
   }, 2200);
+
+  // MENU INTERACTION
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const overlayLinks = document.querySelectorAll('.overlay-link');
+
+  if (menuToggle && menuClose && menuOverlay) {
+    menuToggle.addEventListener('click', () => menuOverlay.classList.add('active'));
+    menuClose.addEventListener('click', () => menuOverlay.classList.remove('active'));
+    
+    // Close menu when a link is clicked
+    overlayLinks.forEach(link => {
+      link.addEventListener('click', () => menuOverlay.classList.remove('active'));
+    });
+  }
 
   // CURSOR
   const cursor = document.getElementById('cursor');

@@ -1,0 +1,252 @@
+  const testimonials = [
+    {
+      quote: "From the lighting to the sound, everything was orchestrated to perfection.",
+      name: "Chief Olusegun",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "I've worked with many event planners but none with the eye for luxury that this team brings.",
+      name: "The Mohammed Family",
+      designation: "Client · Bauchi"
+    },
+    {
+      quote: "My launch party was the talk of the town! The aesthetics were breathtaking.",
+      name: "Oluwaseun & Tobi",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "Organizing our final rites was emotionally tasking, but the team stepped in beautifully.",
+      name: "Mr. Inuwa",
+      designation: "Client · Gombe"
+    },
+    {
+      quote: "The bespoke styling for my charity gala was magnificent. I was blown away by their creativity.",
+      name: "Mr. Babatunde",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "I've worked with many event planners but none with the eye for luxury that this team brings.",
+      name: "Olawale & Simi",
+      designation: "Client · Abeokuta"
+    },
+    {
+      quote: "We wanted a mix of modern luxury and deep traditions. They effortlessly blended both worlds.",
+      name: "Senator Danladi",
+      designation: "Client · Abuja"
+    },
+    {
+      quote: "Our guests are still talking about the incredible experience they had.",
+      name: "The Fintiri Family",
+      designation: "Client · Yola"
+    },
+    {
+      quote: "AG's Event Services transformed our event into something beyond our wildest dreams. Every detail was perfect.",
+      name: "Aisha & Fatima Bello",
+      designation: "Client · Kano"
+    },
+    {
+      quote: "Our guests are still talking about the incredible experience they had.",
+      name: "Alhaji Tambuwal",
+      designation: "Client · Sokoto"
+    },
+    {
+      quote: "The bespoke styling for my charity gala was magnificent. I was blown away by their creativity.",
+      name: "Precious Edem",
+      designation: "Client · Calabar"
+    },
+    {
+      quote: "I've worked with many event planners but none with the eye for luxury that this team brings.",
+      name: "Chief Emeka Nwosu",
+      designation: "Client · Imo"
+    },
+    {
+      quote: "Celebrating our anniversary with them was the best decision. They treated us like royalty.",
+      name: "The Okafor Family",
+      designation: "Client · Awka"
+    },
+    {
+      quote: "The conference they organized for us was seamless. From registration to the final gala night.",
+      name: "Kelechi & Nkiru",
+      designation: "Client · Imo"
+    },
+    {
+      quote: "I wanted a vibrant, culturally rich yet modern bash. The result was a stunning event.",
+      name: "Adebowale & Yemisi",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "For our end-of-year dinner, we needed perfection. They gave us exactly that.",
+      name: "The Bello Family",
+      designation: "Client · Lokoja"
+    },
+    {
+      quote: "Our guests are still talking about the incredible experience they had.",
+      name: "Tamuno & Ibi",
+      designation: "Client · Port Harcourt"
+    },
+    {
+      quote: "We hired them for our executive retreat. The hospitality and dining arrangements were highly commendable.",
+      name: "Engr. Abubakar Musa",
+      designation: "Client · Kaduna"
+    },
+    {
+      quote: "During such a difficult time, the team handled everything with grace and dignity. Truly remarkable.",
+      name: "Folashade Ojo",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "I've worked with many event planners but none with the eye for luxury that this team brings.",
+      name: "Hajiya Zainab",
+      designation: "Client · Minna"
+    },
+    {
+      quote: "Celebrating our anniversary with them was the best decision. They treated us like royalty.",
+      name: "The Nnamdi Family",
+      designation: "Client · Enugu"
+    },
+    {
+      quote: "Every single moment was captured and executed flawlessly. Hands down the best in the business.",
+      name: "The Adeyemi Family",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "I've worked with many event planners but none with the eye for luxury that this team brings.",
+      name: "Alhaji Abdulrahman",
+      designation: "Client · Ilorin"
+    },
+    {
+      quote: "Hosting an official meeting requires precision. They provided a secure, premium environment.",
+      name: "Tolulope & Dapo",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "During such a difficult time, the team handled everything with grace and dignity. Truly remarkable.",
+      name: "Alhaji Masari",
+      designation: "Client · Katsina"
+    },
+    {
+      quote: "Their event logistics are top-notch. Managing our large attendee list was handled with grace.",
+      name: "The Balogun Family",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "Our annual gala has never looked so impressive. The team understood exactly what our brand needed.",
+      name: "Boma Briggs",
+      designation: "Client · Port Harcourt"
+    },
+    {
+      quote: "The conference they organized for us was seamless. From registration to the final gala night.",
+      name: "Mrs. Funke Adeleke",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "Every single moment was captured and executed flawlessly. Hands down the best in the business.",
+      name: "Dr. Nsikak Akpan",
+      designation: "Client · Uyo"
+    },
+    {
+      quote: "AG's Event Services transformed our event into something beyond our wildest dreams. Every detail was perfect.",
+      name: "Dr. Yinka Ayodeji",
+      designation: "Client · Lagos"
+    },
+    {
+      quote: "During such a difficult time, the team handled everything with grace and dignity. Truly remarkable.",
+      name: "The Dickson Family",
+      designation: "Client · Yenagoa"
+    },
+    {
+      quote: "They took our vision and elevated it to a level of sophistication we didn't think was possible.",
+      name: "Engr. Suleiman",
+      designation: "Client · Abuja"
+    },
+    {
+      quote: "Their event logistics are top-notch. Managing our large attendee list was handled with grace.",
+      name: "Musa Ibrahim",
+      designation: "Client · Abuja"
+    },
+    {
+      quote: "The exquisite decor and seamless coordination made our celebration truly magical.",
+      name: "Mr. Terhemen",
+      designation: "Client · Makurdi"
+    },
+    {
+      quote: "Their event logistics are top-notch. Managing our large attendee list was handled with grace.",
+      name: "Alhaji Tariq Danjuma",
+      designation: "Client · Abuja"
+    },
+    {
+      quote: "I wanted a vibrant, culturally rich yet modern bash. The result was a stunning event.",
+      name: "The Alaibo Family",
+      designation: "Client · Port Harcourt"
+    },
+    {
+      quote: "AG's Event Services transformed our event into something beyond our wildest dreams. Every detail was perfect.",
+      name: "The Okowa Family",
+      designation: "Client · Asaba"
+    },
+    {
+      quote: "Their event logistics are top-notch. Managing our large attendee list was handled with grace.",
+      name: "Mr. & Mrs. Adeleke",
+      designation: "Client · Osogbo"
+    },
+    {
+      quote: "I trusted them with my milestone celebration and they delivered beyond measure.",
+      name: "The Al-Makura Family",
+      designation: "Client · Lafia"
+    },
+    {
+      quote: "Organizing our final rites was emotionally tasking, but the team stepped in beautifully.",
+      name: "Dr. Fayemi",
+      designation: "Client · Ado-Ekiti"
+    },
+    {
+      quote: "We hired them for our executive retreat. The hospitality and dining arrangements were highly commendable.",
+      name: "Osas & Nosakhare",
+      designation: "Client · Benin"
+    },
+    {
+      quote: "Professional, punctual, and profoundly talented. I won't use anyone else.",
+      name: "Mr. Plateau Dawit",
+      designation: "Client · Jos"
+    },
+    {
+      quote: "The exquisite decor and seamless coordination made our celebration truly magical.",
+      name: "The Olatunji Family",
+      designation: "Client · Akure"
+    },
+    {
+      quote: "From the lighting to the sound, everything was orchestrated to perfection.",
+      name: "Orji & Nkechi",
+      designation: "Client · Umuahia"
+    },
+    {
+      quote: "They took our vision and elevated it to a level of sophistication we didn't think was possible.",
+      name: "Amara & Chidi Okonkwo",
+      designation: "Client · Enugu"
+    },
+    {
+      quote: "Celebrating our anniversary with them was the best decision. They treated us like royalty.",
+      name: "Amina & Yusuf",
+      designation: "Client · Abuja"
+    },
+    {
+      quote: "We wanted a mix of modern luxury and deep traditions. They effortlessly blended both worlds.",
+      name: "The Makinde Family",
+      designation: "Client · Ibadan"
+    },
+    {
+      quote: "Our guests are still talking about the incredible experience they had.",
+      name: "The Ishaku Family",
+      designation: "Client · Jalingo"
+    },
+    {
+      quote: "The bespoke styling for my charity gala was magnificent. I was blown away by their creativity.",
+      name: "Chioma Eze",
+      designation: "Client · Enugu"
+    },
+    {
+      quote: "The bespoke styling for my charity gala was magnificent. I was blown away by their creativity.",
+      name: "Oritseweyinmi & Efe",
+      designation: "Client · Warri"
+    }
+  ];
