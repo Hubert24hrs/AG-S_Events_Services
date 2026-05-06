@@ -59,6 +59,12 @@
     display: flex; align-items: center; justify-content: center;
     flex-direction: column;
     gap: 2rem;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
   .loader-brand {
     font-family: 'Italiana', serif;
@@ -1298,15 +1304,14 @@
   // HIDE LOADER
   const dismissLoader = () => {
     const ldr = document.getElementById('loader');
-    if (!ldr) return;
-    ldr.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
-    ldr.style.opacity = '0';
-    ldr.style.visibility = 'hidden';
-    setTimeout(function() { ldr.style.display = 'none'; }, 800);
+    if (ldr) {
+      ldr.classList.add('hidden');
+      setTimeout(() => { ldr.style.display = 'none'; }, 1000);
+    }
   };
   
   window.addEventListener('load', dismissLoader);
-  setTimeout(dismissLoader, 2500); // Backup timeout
+  setTimeout(dismissLoader, 2500); // Fail-safe
   document.addEventListener('click', (e) => {
     if (e.target.closest('#loader')) dismissLoader();
   });
