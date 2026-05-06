@@ -466,39 +466,114 @@
     );
   }
 
-  /* TESTIMONIALS */
+  /* CIRCULAR TESTIMONIALS */
   .testimonials-section {
-    padding: 6rem 4rem;
+    padding: 8rem 4rem;
     background: var(--panel);
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  .testimonial-container {
+    width: 100%;
+    max-width: 1456px;
   }
   .testimonials-header {
-    text-align: center; margin-bottom: 3rem;
+    text-align: center; margin-bottom: 5rem;
   }
-  .testimonials-track {
-    display: flex; gap: 1.5rem;
-    animation: scrollTestimonials 30s linear infinite;
+  .testimonial-grid {
+    display: grid;
+    gap: 5rem;
   }
-  .testimonials-track:hover { animation-play-state: paused; }
-  .testimonial-card {
-    flex: 0 0 380px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(184,134,11,0.2);
-    padding: 2rem;
+  @media (min-width: 900px) {
+    .testimonial-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
   }
-  .test-stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.2em; }
-  .test-text {
+  .image-container {
+    position: relative;
+    width: 100%;
+    height: 24rem;
+    perspective: 1000px;
+  }
+  .testimonial-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1.5rem;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.8s cubic-bezier(0.4, 2, 0.3, 1);
+  }
+  .testimonial-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 200px;
+  }
+  .test-name {
+    font-size: 1.5rem;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem; font-weight: 300; font-style: italic;
-    line-height: 1.7; color: rgba(250,248,245,0.8);
-    margin-bottom: 1.2rem;
+    color: var(--gold-light);
+    margin-bottom: 0.25rem;
+    transition: opacity 0.3s;
   }
-  .test-author { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm); }
-  .test-role { font-size: 0.65rem; color: rgba(250,248,245,0.3); margin-top: 0.2rem; }
-  @keyframes scrollTestimonials {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+  .test-designation {
+    font-size: 0.925rem;
+    color: var(--warm);
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: opacity 0.3s;
   }
+  .test-quote {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 1.125rem;
+    color: var(--ivory);
+    transition: opacity 0.3s;
+  }
+  .quote-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(5px);
+    transition: all 0.3s ease-in-out;
+  }
+  .quote-word.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+  .arrow-buttons {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 3rem;
+  }
+  @media (min-width: 900px) {
+    .arrow-buttons { padding-top: 2rem; }
+  }
+  .arrow-button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: background-color 0.3s;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+  }
+  .arrow-button:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+  .arrow-button svg { width: 1.2rem; height: 1.2rem; fill: currentColor; }
 
   /* CTA BANNER */
   .cta-section {
@@ -890,60 +965,34 @@
 
 <!-- TESTIMONIALS -->
 <section class="testimonials-section">
-  <div class="testimonials-header">
-    <span class="section-tag reveal">Client Stories</span>
-    <h2 class="section-title reveal reveal-delay-1">What Our Clients <em>Say</em></h2>
-  </div>
-  <div style="overflow:hidden;">
-    <div class="testimonials-track">
-      <div class="testimonial-card">
-        <div class="test-stars">★★★★★</div>
-        <p class="test-text">"AG's Event Services transformed our wedding into something beyond our wildest dreams. Every detail was perfect — from the floral arrangements to the last dance."</p>
-        <div class="test-author">Amara & Chidi Okonkwo</div>
-        <div class="test-role">Wedding Clients · Lagos, 2024</div>
+  <div class="testimonial-container">
+    <div class="testimonials-header">
+      <span class="section-tag reveal">Client Stories</span>
+      <h2 class="section-title reveal reveal-delay-1">What Our Clients <em>Say</em></h2>
+    </div>
+    
+    <div class="testimonial-grid reveal reveal-delay-2">
+      <!-- Images -->
+      <div class="image-container" id="test-img-container">
+        <!-- JS will populate images -->
       </div>
-      <div class="testimonial-card">
-        <div class="test-stars">★★★★★</div>
-        <p class="test-text">"Our annual corporate gala has never looked so impressive. The AG's team understood exactly what our brand needed and delivered it with exceptional professionalism."</p>
-        <div class="test-author">Mrs. Funke Adeleke</div>
-        <div class="test-role">CEO, Adeleke Group · Corporate Client</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="test-stars">★★★★★</div>
-        <p class="test-text">"I've worked with many event planners but none with the eye for luxury that Matthew and his team bring. Our 50th birthday was an absolute masterpiece."</p>
-        <div class="test-author">Chief Emeka Nwosu</div>
-        <div class="test-role">Birthday Celebration · Abuja, 2023</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="test-stars">★★★★★</div>
-        <p class="test-text">"During such a difficult time, the AG's team handled everything with grace and dignity. My family will never forget their compassion and impeccable execution."</p>
-        <div class="test-author">The Adeyemi Family</div>
-        <div class="test-role">Memorial Service · Port Harcourt</div>
-      </div>
-      <!-- Duplicated for infinite loop -->
-      <div class="testimonial-card">
-        <div class="test-stars">★★★★★</div>
-        <p class="test-text">"AG's Event Services transformed our wedding into something beyond our wildest dreams. Every detail was perfect — from the floral arrangements to the last dance."</p>
-        <div class="test-author">Amara & Chidi Okonkwo</div>
-        <div class="test-role">Wedding Clients · Lagos, 2024</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="test-stars">★★★★★</div>
-        <p class="test-text">"Our annual corporate gala has never looked so impressive. The AG's team understood exactly what our brand needed and delivered it with exceptional professionalism."</p>
-        <div class="test-author">Mrs. Funke Adeleke</div>
-        <div class="test-role">CEO, Adeleke Group · Corporate Client</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="test-stars">★★★★★</div>
-        <p class="test-text">"I've worked with many event planners but none with the eye for luxury that Matthew and his team bring. Our 50th birthday was an absolute masterpiece."</p>
-        <div class="test-author">Chief Emeka Nwosu</div>
-        <div class="test-role">Birthday Celebration · Abuja, 2023</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="test-stars">★★★★★</div>
-        <p class="test-text">"During such a difficult time, the AG's team handled everything with grace and dignity. My family will never forget their compassion and impeccable execution."</p>
-        <div class="test-author">The Adeyemi Family</div>
-        <div class="test-role">Memorial Service · Port Harcourt</div>
+      
+      <!-- Content -->
+      <div class="testimonial-content">
+        <div id="test-text-wrapper">
+          <h3 class="test-name" id="test-name"></h3>
+          <p class="test-designation" id="test-designation"></p>
+          <p class="test-quote" id="test-quote"></p>
+        </div>
+        
+        <div class="arrow-buttons">
+          <button class="arrow-button prev-button" id="test-prev" aria-label="Previous testimonial">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          </button>
+          <button class="arrow-button next-button" id="test-next" aria-label="Next testimonial">
+            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1134,6 +1183,133 @@
   window.addEventListener('scroll', function() {
     backTop.classList.toggle('visible', window.scrollY > 400);
   });
+
+  // CIRCULAR TESTIMONIALS
+  const testimonials = [
+    {
+      quote: "AG's Event Services transformed our wedding into something beyond our wildest dreams. Every detail was perfect — from the floral arrangements to the last dance.",
+      name: "Amara & Chidi Okonkwo",
+      designation: "Wedding Clients · Lagos",
+      src: "https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?q=80&w=1368&auto=format&fit=crop"
+    },
+    {
+      quote: "Our annual corporate gala has never looked so impressive. The AG's team understood exactly what our brand needed and delivered it with exceptional professionalism.",
+      name: "Mrs. Funke Adeleke",
+      designation: "CEO, Adeleke Group",
+      src: "https://images.unsplash.com/photo-1628749528992-f5702133b686?q=80&w=1368&auto=format&fit=crop"
+    },
+    {
+      quote: "I've worked with many event planners but none with the eye for luxury that Matthew and his team bring. Our 50th birthday was an absolute masterpiece.",
+      name: "Chief Emeka Nwosu",
+      designation: "Birthday Celebration · Abuja",
+      src: "https://images.unsplash.com/photo-1524267213992-b76e8577d046?q=80&w=1368&auto=format&fit=crop"
+    }
+  ];
+  let currentTestIndex = 0;
+  const testImgContainer = document.getElementById('test-img-container');
+  const testName = document.getElementById('test-name');
+  const testDesignation = document.getElementById('test-designation');
+  const testQuote = document.getElementById('test-quote');
+  
+  if (testImgContainer) {
+    // Init images
+    testimonials.forEach((t, i) => {
+      const img = document.createElement('img');
+      img.src = t.src;
+      img.alt = t.name;
+      img.className = 'testimonial-image';
+      testImgContainer.appendChild(img);
+    });
+    const testImages = testImgContainer.querySelectorAll('img');
+
+    function updateTestimonials() {
+      const len = testimonials.length;
+      const cw = testImgContainer.offsetWidth || 500;
+      
+      let gap = 60;
+      if (cw > 1024) {
+        if (cw >= 1456) gap = Math.max(60, 86 + 0.06018 * (cw - 1456));
+        else gap = 60 + (86 - 60) * ((cw - 1024) / (1456 - 1024));
+      }
+      const maxStickUp = gap * 0.8;
+
+      testImages.forEach((img, index) => {
+        const isCenter = index === currentTestIndex;
+        const isLeft = (currentTestIndex - 1 + len) % len === index;
+        const isRight = (currentTestIndex + 1) % len === index;
+
+        if (isCenter) {
+          img.style.zIndex = 3;
+          img.style.opacity = 1;
+          img.style.transform = `translateX(0px) translateY(0px) scale(1) rotateY(0deg)`;
+        } else if (isLeft) {
+          img.style.zIndex = 2;
+          img.style.opacity = 1;
+          img.style.transform = `translateX(-${gap}px) translateY(-${maxStickUp}px) scale(0.85) rotateY(15deg)`;
+        } else if (isRight) {
+          img.style.zIndex = 2;
+          img.style.opacity = 1;
+          img.style.transform = `translateX(${gap}px) translateY(-${maxStickUp}px) scale(0.85) rotateY(-15deg)`;
+        } else {
+          img.style.zIndex = 1;
+          img.style.opacity = 0;
+        }
+      });
+
+      const active = testimonials[currentTestIndex];
+      
+      testName.style.opacity = 0;
+      testDesignation.style.opacity = 0;
+      testQuote.innerHTML = '';
+
+      setTimeout(() => {
+        testName.textContent = active.name;
+        testDesignation.textContent = active.designation;
+        
+        const words = active.quote.split(' ');
+        words.forEach((w, i) => {
+          const span = document.createElement('span');
+          span.innerHTML = w + '&nbsp;';
+          span.className = 'quote-word';
+          testQuote.appendChild(span);
+          setTimeout(() => {
+            span.classList.add('visible');
+          }, i * 30);
+        });
+        
+        testName.style.opacity = 1;
+        testDesignation.style.opacity = 1;
+      }, 300);
+    }
+
+    updateTestimonials();
+    window.addEventListener('resize', updateTestimonials);
+
+    let testInterval = setInterval(() => {
+      currentTestIndex = (currentTestIndex + 1) % testimonials.length;
+      updateTestimonials();
+    }, 6000);
+
+    const resetInterval = () => {
+      clearInterval(testInterval);
+      testInterval = setInterval(() => {
+        currentTestIndex = (currentTestIndex + 1) % testimonials.length;
+        updateTestimonials();
+      }, 6000);
+    };
+
+    document.getElementById('test-prev').addEventListener('click', () => {
+      currentTestIndex = (currentTestIndex - 1 + testimonials.length) % testimonials.length;
+      updateTestimonials();
+      resetInterval();
+    });
+
+    document.getElementById('test-next').addEventListener('click', () => {
+      currentTestIndex = (currentTestIndex + 1) % testimonials.length;
+      updateTestimonials();
+      resetInterval();
+    });
+  }
 })();
 </script>
 </body>
