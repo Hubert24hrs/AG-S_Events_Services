@@ -758,16 +758,16 @@
   }
   .news-card {
     background: rgba(184,134,11,0.03); border: 1px solid rgba(184,134,11,0.15);
-    border-radius: 1.5rem; overflow: hidden; transition: all 0.4s ease;
+    border-radius: 2rem; overflow: hidden; transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
     display: flex; flex-direction: column;
-    padding: 2.5rem;
+    padding: 3.5rem 2.5rem;
   }
-  .news-card:hover { transform: translateY(-8px); border-color: var(--gold); background: rgba(184,134,11,0.06); }
+  .news-card:hover { transform: translateY(-12px); border-color: var(--gold-bright); background: rgba(184,134,11,0.08); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
   .news-content { padding: 0; display: flex; flex-direction: column; flex-grow: 1; }
-  .news-region { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 1.2rem; font-weight: 600; }
-  .news-title { font-size: 1.6rem; font-family: 'Italiana', serif; color: var(--ivory); margin-bottom: 1.5rem; line-height: 1.3; letter-spacing: 0.02em; }
-  .news-excerpt { font-size: 1.05rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem; line-height: 1.7; flex-grow: 1; font-weight: 300; }
-  .news-meta { font-size: 0.85rem; color: rgba(255,255,255,0.4); display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; }
+  .news-region { font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 1.5rem; font-weight: 700; }
+  .news-title { font-size: 2.2rem; font-family: 'Italiana', serif; color: var(--ivory); margin-bottom: 1.8rem; line-height: 1.2; letter-spacing: 0.03em; }
+  .news-excerpt { font-size: 1.2rem; color: rgba(255,255,255,0.8); margin-bottom: 2.5rem; line-height: 1.8; flex-grow: 1; font-weight: 300; }
+  .news-meta { font-size: 0.95rem; color: rgba(255,255,255,0.5); display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; }
 
   /* CTA BANNER */
   .cta-section {
@@ -1296,16 +1296,20 @@
 <script>
 (function() {
   // HIDE LOADER
-  const loader = document.getElementById('loader');
   const dismissLoader = () => {
-    if (!loader) return;
-    loader.style.transition = 'opacity 0.6s ease';
-    loader.style.opacity = '0';
-    setTimeout(function() { loader.style.display = 'none'; }, 600);
+    const ldr = document.getElementById('loader');
+    if (!ldr) return;
+    ldr.style.transition = 'opacity 0.8s ease, visibility 0.8s ease';
+    ldr.style.opacity = '0';
+    ldr.style.visibility = 'hidden';
+    setTimeout(function() { ldr.style.display = 'none'; }, 800);
   };
   
-  setTimeout(dismissLoader, 1800);
-  if (loader) loader.addEventListener('click', dismissLoader);
+  window.addEventListener('load', dismissLoader);
+  setTimeout(dismissLoader, 2500); // Backup timeout
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#loader')) dismissLoader();
+  });
 
   // MENU INTERACTION
   const menuToggle = document.getElementById('menu-toggle');
@@ -1314,12 +1318,12 @@
   const overlayLinks = document.querySelectorAll('.overlay-link');
 
   if (menuToggle && menuClose && menuOverlay) {
-    menuToggle.addEventListener('click', () => menuOverlay.classList.add('active'));
-    menuClose.addEventListener('click', () => menuOverlay.classList.remove('active'));
+    menuToggle.addEventListener('click', () => menuOverlay.classList.add('open'));
+    menuClose.addEventListener('click', () => menuOverlay.classList.remove('open'));
     
     // Close menu when a link is clicked
     overlayLinks.forEach(link => {
-      link.addEventListener('click', () => menuOverlay.classList.remove('active'));
+      link.addEventListener('click', () => menuOverlay.classList.remove('open'));
     });
   }
 
