@@ -1621,16 +1621,7 @@
         media.alt = item.title;
       }
       
-      const overlay = document.createElement('div');
-      overlay.className = 'card-stack-overlay';
-      
-      const content = document.createElement('div');
-      content.className = 'card-stack-content';
-      content.innerHTML = `<div class="card-stack-title">${item.title}</div><div class="card-stack-desc">${item.desc}</div>`;
-      
       inner.appendChild(media);
-      inner.appendChild(overlay);
-      inner.appendChild(content);
       card.appendChild(inner);
       
       card.addEventListener('click', () => {
