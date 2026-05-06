@@ -1314,15 +1314,28 @@
   const testQuote = document.getElementById('test-quote');
   
   if (testImgContainer) {
-    // Init images
+    // Init text cards instead of images
     testimonials.forEach((t, i) => {
-      const img = document.createElement('img');
-      img.src = t.src;
-      img.alt = t.name;
-      img.className = 'testimonial-image';
-      testImgContainer.appendChild(img);
+      const card = document.createElement('div');
+      card.className = 'testimonial-image';
+      card.style.background = 'linear-gradient(135deg, #1a1206 0%, #2a1f0a 50%, #141008 100%)';
+      card.style.display = 'flex';
+      card.style.alignItems = 'center';
+      card.style.justifyContent = 'center';
+      card.style.textAlign = 'center';
+      card.style.padding = '2rem';
+      
+      const nameText = document.createElement('h3');
+      nameText.style.fontFamily = "'Cormorant Garamond', serif";
+      nameText.style.fontSize = '2rem';
+      nameText.style.color = 'rgba(212,160,23,0.8)';
+      nameText.style.fontStyle = 'italic';
+      nameText.textContent = t.name;
+      
+      card.appendChild(nameText);
+      testImgContainer.appendChild(card);
     });
-    const testImages = testImgContainer.querySelectorAll('img');
+    const testImages = testImgContainer.querySelectorAll('.testimonial-image');
 
     function updateTestimonials() {
       const len = testimonials.length;
