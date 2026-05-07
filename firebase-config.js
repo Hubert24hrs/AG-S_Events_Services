@@ -1,31 +1,18 @@
-/**
- * AG'S EVENT SERVICES — Firebase Configuration
- * =============================================
- * Replace the placeholder values below with your actual Firebase project config.
- * See SETUP.md for step-by-step instructions.
- *
- * Get your config from:
- *   Firebase Console → Project Settings → Your Apps → Web App → SDK setup and configuration
- */
-
+// Firebase configuration for AG's Event Services
+// Generated automatically on 2026-05-07
 const firebaseConfig = {
-  apiKey:            "PASTE_YOUR_API_KEY_HERE",
-  authDomain:        "PASTE_YOUR_AUTH_DOMAIN_HERE",
-  projectId:         "PASTE_YOUR_PROJECT_ID_HERE",
-  storageBucket:     "PASTE_YOUR_STORAGE_BUCKET_HERE",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID_HERE",
-  appId:             "PASTE_YOUR_APP_ID_HERE"
+  apiKey: "AIzaSyD9NoCo64wFDYMVMCqPG4-iP1VL7GHSenc",
+  authDomain: "ags-events-services.firebaseapp.com",
+  projectId: "ags-events-services",
+  storageBucket: "ags-events-services.firebasestorage.app",
+  messagingSenderId: "631997568122",
+  appId: "1:631997568122:web:7aa8e64fbf6af1a59597c3",
+  measurementId: "G-5P8FKZE3VP"
 };
 
-// Initialize Firebase (compat mode — works with CDN scripts)
-if (typeof firebase !== 'undefined') {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-  window.db = firebase.firestore();
-  window.FIREBASE_READY = true;
-  console.log('[AG Events] Firebase connected ✓');
-} else {
-  window.FIREBASE_READY = false;
-  console.warn('[AG Events] Firebase SDK not loaded — running in offline/demo mode.');
-}
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+window.db = firebase.firestore();
+window.FIREBASE_READY = true;
+
+console.log("Firebase initialized successfully for ags-events-services");
