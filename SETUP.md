@@ -66,7 +66,7 @@ Click **Publish**.
 
 ### 6. Test
 1. Open `admin.html` in your browser
-2. Login with password: `AGSAdmin2025!`
+2. Login with password: `Agatha@agsevent202612345$`
 3. Create a test news article → check if it appears in the News tab
 
 ---
@@ -74,8 +74,8 @@ Click **Publish**.
 ## Admin Access
 
 - **URL:** `https://hubert24hrs.github.io/AG-S_Events_Services/admin.html`
-- **Password:** `AGSAdmin2025!`
-- To change password: edit `admin.html`, find `const ADMIN_PWD = 'AGSAdmin2025!'` and update it.
+- **Password:** `Agatha@agsevent202612345$`
+- To change password: edit `admin.html`, find `const ADMIN_PWD = 'Agatha@agsevent202612345$'` and update it.
 
 ---
 
