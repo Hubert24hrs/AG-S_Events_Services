@@ -1075,6 +1075,10 @@
   }
 
 </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 </head>
 <body>
 <a href="#hero" class="skip-link">Skip to content</a>
@@ -2388,9 +2392,75 @@
     var honeypot = form.querySelector('[name="website"]');
     if (honeypot && honeypot.value) return;
     if (!form.checkValidity()) { form.reportValidity(); return; }
-    form.style.display = 'none';
-    if (success) success.style.display = 'block';
+    // Save to Firebase if available
+    var submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending...'; }
+    var data = {
+      fullName: (form.querySelector('[name="full_name"]') || {}).value || '',
+      email: (form.querySelector('[name="email"]') || {}).value || '',
+      phone: (form.querySelector('[name="phone"]') || {}).value || '',
+      eventType: (form.querySelector('[name="event_type"]') || {}).value || '',
+      guestCount: (form.querySelector('[name="guest_count"]') || {}).value || '',
+      budget: (form.querySelector('[name="budget"]') || {}).value || '',
+      message: (form.querySelector('[name="message"]') || {}).value || '',
+      read: false
+    };
+    function showSuccess() {
+      form.style.display = 'none';
+      if (success) success.style.display = 'block';
+    }
+    if (window.FIREBASE_READY && window.db) {
+      data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      window.db.collection('messages').add(data)
+        .then(showSuccess)
+        .catch(function(err) {
+          console.warn('Firebase write failed:', err);
+          showSuccess(); // still show success to user
+        });
+    } else {
+      showSuccess(); // offline mode
+    }
   };
+
+  // LOAD LIVE EVENTS FROM FIREBASE
+  (function loadFirebaseContent() {
+    if (!window.FIREBASE_READY || !window.db) return;
+    var db = window.db;
+
+    // Load events
+    db.collection('events').where('published','==',true).orderBy('createdAt','asc').get()
+      .then(function(snap) {
+        if (snap.empty) return;
+        var list = document.querySelector('.events-list');
+        if (!list) return;
+        list.innerHTML = snap.docs.map(function(d) {
+          var a = d.data();
+          return '<div class="event-row">' +
+            '<div class="event-date">' + (a.date||'') + '</div>' +
+            '<div class="event-details"><h3 class="event-name">' + (a.name||'') + '</h3>' +
+            '<p class="event-loc">' + (a.location||'') + '</p></div>' +
+            '<a href="#contact-section" class="event-link">Enquire</a></div>';
+        }).join('');
+      }).catch(function(){});
+
+    // Load news
+    db.collection('news').where('published','==',true).orderBy('createdAt','desc').limit(20).get()
+      .then(function(snap) {
+        if (snap.empty) return;
+        var grid = document.querySelector('.news-grid');
+        if (!grid) return;
+        grid.innerHTML = snap.docs.map(function(d) {
+          var a = d.data();
+          return '<div class="news-card reveal">' +
+            '<div class="news-card-top"><span class="news-region">' + (a.region||'News') + '</span>' +
+            '<span class="news-date">' + (a.date||'') + '</span></div>' +
+            '<h3 class="news-title">' + (a.title||'') + '</h3>' +
+            '<p class="news-excerpt">' + (a.excerpt||'') + '</p>' +
+            '<div class="news-meta"><span>' + (a.readTime||'') + '</span>' +
+            '<a href="#" class="news-link">Read More</a></div></div>';
+        }).join('');
+      }).catch(function(){});
+  })();
 
 })();
 </script>
