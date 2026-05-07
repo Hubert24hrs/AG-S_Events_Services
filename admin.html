@@ -13,6 +13,7 @@
   --black:#0A0A0A;--soft:#111111;--panel:#16161E;
   --ivory:#FAF8F5;--warm:#C9A84C;--glass:rgba(255,255,255,0.03);
   --border:rgba(184,134,11,0.2);--sidebar:220px;
+  --sidebar-mobile:260px;
 }
 body{background:var(--black);color:var(--ivory);font-family:"DM Sans",sans-serif;min-height:100vh}
 
@@ -114,11 +115,24 @@ tr:hover td{background:rgba(184,134,11,.04)}
 .tab-panel{display:none}.tab-panel.active{display:block}
 
 @media(max-width:900px){
-  .sidebar{transform:translateX(-100%)}
+  .sidebar{transform:translateX(-100%);width:var(--sidebar-mobile)}
+  .sidebar.open{transform:translateX(0)}
   .main-area{margin-left:0}
+  .top-bar{padding:1rem}
   .stats-row{grid-template-columns:1fr 1fr}
   .form-row-2{grid-template-columns:1fr}
+  .mobile-toggle{display:flex !important}
+  .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;display:none}
+  .sidebar-overlay.open{display:block}
+  .tbl-wrap{overflow-x:auto}
+  table{min-width:700px}
 }
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr}
+  .content{padding:1rem}
+  .modal-card{padding:1.5rem}
+}
+.mobile-toggle{display:none;background:transparent;border:none;color:var(--gold);font-size:1.5rem;cursor:pointer;margin-right:1rem;align-items:center;justify-content:center}
 </style>
 </head>
 <body>
@@ -159,6 +173,7 @@ tr:hover td{background:rgba(184,134,11,.04)}
 <!-- MAIN -->
 <div class="main-area">
   <div class="top-bar">
+    <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
     <div class="top-title" id="top-title">Dashboard</div>
     <button class="btn-gold" id="new-btn" style="display:none;font-size:.7rem;padding:.6rem 1.4rem" onclick="openModal()">+ New Post</button>
   </div>
@@ -236,6 +251,7 @@ tr:hover td{background:rgba(184,134,11,.04)}
 </div><!-- /main-area -->
 </div><!-- /app-layout -->
 </div><!-- /admin-app -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
@@ -290,6 +306,12 @@ function switchTab(name){
   document.getElementById('tab-'+name).classList.add('active');
   document.querySelectorAll('.nav-item')[['dashboard','news','events','messages','testimonials'].indexOf(name)].classList.add('active');
   document.getElementById('top-title').textContent=tabTitles[name];
+  if(window.innerWidth<=900)toggleSidebar();
+}
+
+function toggleSidebar(){
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
 }
 
 // ===== TOAST =====
