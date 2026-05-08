@@ -1209,9 +1209,10 @@
     :root {
       --body-size: 1.15rem;
     }
-    nav {
+    body nav {
       display: grid !important;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: 60px 1fr 60px !important;
+      align-items: center !important;
       padding: 0.8rem 1rem !important;
     }
     .menu-btn {
@@ -1220,12 +1221,16 @@
     }
     .nav-logo-wrap {
       grid-column: 2;
+      justify-self: center;
       margin: 0 auto;
       align-items: center !important;
+      text-align: center;
     }
     .nav-right {
       grid-column: 3;
       justify-self: end;
+      display: flex !important;
+      align-items: center;
       gap: 0.5rem !important;
     }
     .nav-cta { display: none; }
@@ -1248,18 +1253,26 @@
     .section-body { font-size: 1.1rem; }
 
     /* Events mobile centering */
-    .event-row {
+    body .events-section .event-row {
       flex-direction: column !important;
       text-align: center !important;
       gap: 1.5rem !important;
+      padding: 3rem 1rem !important;
+      align-items: center !important;
     }
-    .event-date {
+    body .events-section .event-date {
       min-width: auto !important;
+      margin-bottom: 0.5rem;
     }
-    .event-details {
+    body .events-section .event-details {
       padding: 0 !important;
     }
+    body .events-section .event-link {
+      margin-top: 1rem;
+    }
   }
+
+  /* Deploy: 2026-05-08 16:03 */
 
 </style>
   <!-- Firebase SDK -->
