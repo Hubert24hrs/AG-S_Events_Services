@@ -260,6 +260,7 @@
 
   /* Left circle: visible when default, shrinks when alt */
   .gooey-toggle .circle-left {
+    transform-origin: 16px 16px;
     transform: translateX(0) scale(1);
   }
   body.alt-theme .gooey-toggle .circle-left {
@@ -268,10 +269,22 @@
 
   /* Right circle: hidden when default, grows when alt */
   .gooey-toggle .circle-right {
+    transform-origin: 36px 16px;
     transform: translateX(-12px) scale(0);
   }
   body.alt-theme .gooey-toggle .circle-right {
     transform: translateX(0) scale(1);
+  }
+
+  /* Drop circle: dripping effect when active */
+  .gooey-toggle .drop-circle {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: transform 0.7s, opacity 0.3s;
+  }
+  body.alt-theme .gooey-toggle .drop-circle {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   #goo-filter-svg { position: fixed; width: 0; height: 0; visibility: hidden; }
@@ -1248,6 +1261,7 @@
       <svg viewBox="0 0 52 32" filter="url(#goo)">
         <circle class="circle circle-left" cx="16" cy="16" r="10"></circle>
         <circle class="circle circle-right" cx="36" cy="16" r="10"></circle>
+        <circle class="drop-circle" cx="35" cy="-1" r="2.5"></circle>
       </svg>
     </label>
     <button class="nav-cta" onclick="document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})">Book Appointment</button>
