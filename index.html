@@ -35,6 +35,9 @@
     --body-size: 1.05rem;
     --h1-size: clamp(3rem, 8vw, 6.5rem);
     --h2-size: clamp(2.2rem, 5vw, 3.8rem);
+    --sky: #38BDF8;
+    --sky-bright: #7DD3FC;
+    --sky-glow: rgba(56,189,248,0.18);
   }
 
   html, body {
@@ -94,7 +97,8 @@
     font-family: 'Italiana', serif;
     font-size: 2.2rem;
     letter-spacing: 0.3em;
-    color: var(--gold);
+    color: var(--sky);
+    text-shadow: 0 0 24px var(--sky-glow), 0 0 48px rgba(56,189,248,0.08);
     opacity: 0;
     animation: fadeIn 0.8s 0.3s forwards;
   }
@@ -129,12 +133,58 @@
     transition: background 0.3s;
   }
   .nav-left, .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-logo-wrap {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-decoration: none;
+    gap: 0;
+  }
   .nav-logo {
     font-family: 'Italiana', serif;
     font-size: 1.35rem;
     letter-spacing: 0.18em;
-    color: var(--gold);
+    color: var(--sky);
     text-decoration: none;
+    text-shadow: 0 0 18px var(--sky-glow);
+    display: block;
+    transition: color 0.3s, text-shadow 0.3s;
+  }
+  .nav-logo-wrap:hover .nav-logo {
+    color: var(--sky-bright);
+    text-shadow: 0 0 28px rgba(56,189,248,0.4);
+  }
+  .nav-logo-underline {
+    display: block;
+    width: 100%;
+    height: 14px;
+    margin-top: -2px;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .nav-underline-path {
+    stroke: var(--sky);
+    stroke-width: 1.8;
+    fill: none;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    transition: stroke 0.3s;
+    animation: navUnderlineDraw 1.4s 2.6s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .nav-logo-wrap:hover .nav-underline-path {
+    stroke: var(--sky-bright);
+    animation: navUnderlineWave 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  @keyframes navUnderlineDraw {
+    0%   { stroke-dashoffset: 300; opacity: 0; }
+    10%  { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 1; }
+  }
+  @keyframes navUnderlineWave {
+    0%   { d: path("M 0,7 Q 75,2 150,7 Q 225,12 300,7"); }
+    50%  { d: path("M 0,7 Q 75,14 150,7 Q 225,0 300,7"); }
+    100% { d: path("M 0,7 Q 75,2 150,7 Q 225,12 300,7"); }
   }
   .menu-btn, .theme-toggle {
     background: transparent; border: none; 
@@ -844,7 +894,8 @@
   .footer-brand {
     font-family: 'Italiana', serif;
     font-size: 1.5rem; letter-spacing: 0.15em;
-    color: var(--gold); margin-bottom: 1rem;
+    color: var(--sky); margin-bottom: 1rem;
+    text-shadow: 0 0 18px var(--sky-glow);
   }
   .footer-tagline {
     font-size: 0.75rem; color: rgba(250,248,245,0.35);
@@ -1123,7 +1174,13 @@
     <button class="menu-btn" id="menu-toggle" aria-label="Open Menu">
       <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
-    <a class="nav-logo" href="#">AG'S EVENT SERVICES</a>
+    <a class="nav-logo-wrap" href="#" id="nav-logo-link" aria-label="AG's Event Services">
+      <span class="nav-logo">AG'S EVENT SERVICES</span>
+      <svg class="nav-logo-underline" viewBox="0 0 300 14" preserveAspectRatio="none">
+        <path class="nav-underline-path" id="nav-underline-path"
+          d="M 0,7 Q 75,2 150,7 Q 225,12 300,7"/>
+      </svg>
+    </a>
   </div>
   <div class="nav-right">
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
@@ -2483,6 +2540,62 @@
             '<a href="#" class="news-link">Read More</a></div></div>';
         }).join('');
       }).catch(function(){});
+  })();
+
+
+  // NAV LOGO ANIMATED UNDERLINE (vanilla JS framer-motion equivalent)
+  (function initNavLogoAnimation() {
+    var wrap = document.getElementById('nav-logo-link');
+    var path = document.getElementById('nav-underline-path');
+    if (!wrap || !path) return;
+
+    var normalPath = 'M 0,7 Q 75,2 150,7 Q 225,12 300,7';
+    var hoverPath  = 'M 0,7 Q 75,14 150,7 Q 225,0 300,7';
+    var isHovering = false;
+    var animFrame;
+
+    function morphPath(from, to, duration, onDone) {
+      var start = null;
+      // Parse quadratic bezier control points as numbers for interpolation
+      function parsePoints(d) {
+        var m = d.match(/[-\d.]+/g);
+        return m.map(Number);
+      }
+      var fromP = parsePoints(from);
+      var toP   = parsePoints(to);
+      function step(ts) {
+        if (!start) start = ts;
+        var t = Math.min((ts - start) / duration, 1);
+        // Ease in-out cubic
+        var ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+        var pts = fromP.map(function(v, i) {
+          return (v + (toP[i] - v) * ease).toFixed(3);
+        });
+        path.setAttribute('d',
+          'M ' + pts[0] + ',' + pts[1] +
+          ' Q ' + pts[2] + ',' + pts[3] + ' ' + pts[4] + ',' + pts[5] +
+          ' Q ' + pts[6] + ',' + pts[7] + ' ' + pts[8] + ',' + pts[9]
+        );
+        if (t < 1) {
+          animFrame = requestAnimationFrame(step);
+        } else {
+          if (onDone) onDone();
+        }
+      }
+      cancelAnimationFrame(animFrame);
+      animFrame = requestAnimationFrame(step);
+    }
+
+    wrap.addEventListener('mouseenter', function() {
+      isHovering = true;
+      morphPath(normalPath, hoverPath, 400, function() {
+        if (isHovering) morphPath(hoverPath, normalPath, 600, null);
+      });
+    });
+    wrap.addEventListener('mouseleave', function() {
+      isHovering = false;
+      morphPath(path.getAttribute('d'), normalPath, 350, null);
+    });
   })();
 
 })();
