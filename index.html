@@ -218,17 +218,63 @@
     50%  { d: path("M 0,7 Q 75,14 150,7 Q 225,0 300,7"); }
     100% { d: path("M 0,7 Q 75,2 150,7 Q 225,12 300,7"); }
   }
-  .menu-btn, .theme-toggle {
-    background: transparent; border: none; 
-    color: var(--ivory); display: flex; align-items: center; justify-content: center;
-    transition: color 0.3s; padding: 0.5rem;
-  }
-  .menu-btn:hover, .theme-toggle:hover { color: var(--gold); }
-  .menu-btn svg, .theme-toggle svg { width: 24px; height: 24px; }
   
-  .theme-toggle .sun-icon { display: none; }
-  body.alt-theme .theme-toggle .moon-icon { display: none; }
-  body.alt-theme .theme-toggle .sun-icon { display: block; }
+  /* GOOEY TOGGLE */
+  .gooey-toggle {
+    --c-active: #008751; /* Nigeria Green for active */
+    --c-default: #D2D6E9;
+    --c-default-dark: #C7CBDF;
+    position: relative;
+    display: block;
+    cursor: pointer;
+    height: 32px;
+    width: 52px;
+    transform: translateZ(0);
+    margin-right: 0.5rem;
+  }
+
+  .gooey-toggle input {
+    height: 100%; width: 100%;
+    cursor: pointer; appearance: none;
+    border-radius: 9999px;
+    background: var(--c-default);
+    outline: none;
+    transition: background-color 0.5s;
+    margin: 0;
+  }
+  .gooey-toggle input:hover { background: var(--c-default-dark); }
+  
+  /* When checked / Nigeria Theme */
+  body.alt-theme .gooey-toggle input { background: var(--c-active); }
+
+  .gooey-toggle svg {
+    pointer-events: none;
+    position: absolute; inset: 0;
+    fill: white;
+  }
+
+  .gooey-toggle .circle {
+    transition: transform 0.5s, opacity 0.5s;
+    transform-box: fill-box;
+  }
+
+  /* Left circle: visible when default, shrinks when alt */
+  .gooey-toggle .circle-left {
+    transform: translateX(0) scale(1);
+  }
+  body.alt-theme .gooey-toggle .circle-left {
+    transform: translateX(12px) scale(0);
+  }
+
+  /* Right circle: hidden when default, grows when alt */
+  .gooey-toggle .circle-right {
+    transform: translateX(-12px) scale(0);
+  }
+  body.alt-theme .gooey-toggle .circle-right {
+    transform: translateX(0) scale(1);
+  }
+
+  #goo-filter-svg { position: fixed; width: 0; height: 0; visibility: hidden; }
 
   /* FULLSCREEN MENU OVERLAY */
   .menu-overlay {
@@ -1197,10 +1243,13 @@
     </a>
   </div>
   <div class="nav-right">
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme" title="Switch Theme (Default / Nigeria Luxury)">
-      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
+    <label class="gooey-toggle" id="theme-toggle" title="Switch Theme (Default / Nigeria Luxury)">
+      <input type="checkbox" id="theme-checkbox">
+      <svg viewBox="0 0 52 32" filter="url(#goo)">
+        <circle class="circle circle-left" cx="16" cy="16" r="10"></circle>
+        <circle class="circle circle-right" cx="36" cy="16" r="10"></circle>
+      </svg>
+    </label>
     <button class="nav-cta" onclick="document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})">Book Appointment</button>
   </div>
 </nav>
@@ -1693,6 +1742,17 @@
     </div>
   </div>
 </footer>
+
+<!-- GOOEY FILTER -->
+<svg id="goo-filter-svg">
+  <defs>
+    <filter id="goo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+      <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+    </filter>
+  </defs>
+</svg>
 
 <!-- BACK TO TOP -->
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
@@ -2346,17 +2406,18 @@
   }
 
   // NAVIGATION & THEME LOGIC
-  const themeToggle = document.getElementById('theme-toggle');
+  const themeCheckbox = document.getElementById('theme-checkbox');
 
   // Load saved theme
   const savedTheme = localStorage.getItem('ag-theme');
   if (savedTheme === 'nigeria') {
     document.body.classList.add('alt-theme');
+    if (themeCheckbox) themeCheckbox.checked = true;
   }
 
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const isAlt = document.body.classList.toggle('alt-theme');
+  if (themeCheckbox) {
+    themeCheckbox.addEventListener('change', (e) => {
+      const isAlt = document.body.classList.toggle('alt-theme', e.target.checked);
       localStorage.setItem('ag-theme', isAlt ? 'nigeria' : 'default');
     });
   }
