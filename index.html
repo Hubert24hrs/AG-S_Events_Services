@@ -220,6 +220,15 @@
   }
   
   /* GOOEY TOGGLE */
+  .menu-btn {
+    background: none; border: none;
+    color: var(--ivory); cursor: pointer;
+    padding: 0.5rem; display: flex; align-items: center; justify-content: center;
+    transition: color 0.3s;
+  }
+  .menu-btn:hover { color: var(--gold); }
+  .menu-btn svg { width: 24px; height: 24px; }
+
   .gooey-toggle {
     --c-active: #008751; /* Nigeria Green for active */
     --c-default: #D2D6E9;
@@ -1200,8 +1209,26 @@
     :root {
       --body-size: 1.15rem;
     }
+    nav {
+      display: grid !important;
+      grid-template-columns: 1fr auto 1fr;
+      padding: 0.8rem 1rem !important;
+    }
+    .menu-btn {
+      grid-column: 1;
+      justify-self: start;
+    }
+    .nav-logo-wrap {
+      grid-column: 2;
+      margin: 0 auto;
+      align-items: center !important;
+    }
+    .nav-right {
+      grid-column: 3;
+      justify-self: end;
+      gap: 0.5rem !important;
+    }
     .nav-cta { display: none; }
-    .nav-left { gap: 0.5rem; }
     .services-grid { grid-template-columns: 1fr !important; }
     .footer-grid { grid-template-columns: 1fr !important; }
     .contact-section { padding: 4rem 1.5rem; }
@@ -1219,6 +1246,19 @@
     .menu-close { right: 1.5rem; top: 1.5rem; }
     .section-title { font-size: 2.2rem; }
     .section-body { font-size: 1.1rem; }
+
+    /* Events mobile centering */
+    .event-row {
+      flex-direction: column !important;
+      text-align: center !important;
+      gap: 1.5rem !important;
+    }
+    .event-date {
+      min-width: auto !important;
+    }
+    .event-details {
+      padding: 0 !important;
+    }
   }
 
 </style>
@@ -1243,18 +1283,16 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-left">
-    <button class="menu-btn" id="menu-toggle" aria-label="Open Menu">
-      <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-    <a class="nav-logo-wrap" href="#" id="nav-logo-link" aria-label="AG's Event Services">
-      <span class="nav-logo">AG'S EVENT SERVICES</span>
-      <svg class="nav-logo-underline" viewBox="0 0 300 14" preserveAspectRatio="none">
-        <path class="nav-underline-path" id="nav-underline-path"
-          d="M 0,7 Q 75,2 150,7 Q 225,12 300,7"/>
-      </svg>
-    </a>
-  </div>
+  <button class="menu-btn" id="menu-toggle" aria-label="Open Menu">
+    <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <a class="nav-logo-wrap" href="#" id="nav-logo-link" aria-label="AG's Event Services">
+    <span class="nav-logo">AG'S EVENT SERVICES</span>
+    <svg class="nav-logo-underline" viewBox="0 0 300 14" preserveAspectRatio="none">
+      <path class="nav-underline-path" id="nav-underline-path"
+        d="M 0,7 Q 75,2 150,7 Q 225,12 300,7"/>
+    </svg>
+  </a>
   <div class="nav-right">
     <label class="gooey-toggle" id="theme-toggle" title="Switch Theme (Default / Nigeria Luxury)">
       <input type="checkbox" id="theme-checkbox">
