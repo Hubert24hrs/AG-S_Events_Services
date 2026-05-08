@@ -40,6 +40,37 @@
     --sky-glow: rgba(56,189,248,0.18);
   }
 
+  /* NIGERIA LUXURY THEME OVERRIDES */
+  body.alt-theme {
+    --black: #002B1B; /* Deep Forest Green */
+    --black-soft: #003824;
+    --panel: #004D30;
+    --ivory: #FFFFFF;
+    --gold: #FFFFFF; /* Bright White */
+    --gold-bright: #F0F0F0;
+    --gold-light: #E0E0E0;
+    --warm: #008751; /* Vibrant Nigerian Green */
+    --sky: #008751; /* Primary Brand Green */
+    --sky-bright: #00A361;
+    --sky-glow: rgba(0, 135, 81, 0.25);
+    --glass-border: rgba(255,255,255,0.3);
+  }
+  
+  body.alt-theme .hero-headline em {
+    color: #B8860B !important; /* Keep a touch of gold for luxury */
+    text-shadow: 0 0 20px rgba(184,134,11,0.3);
+  }
+
+  body.alt-theme .loader {
+    background: #002B1B;
+  }
+
+  body.alt-theme .btn-gold {
+    background: linear-gradient(135deg, #008751 0%, #004D30 100%);
+    color: white;
+    border-color: rgba(255,255,255,0.2);
+  }
+
   html, body {
     overflow-x: hidden;
     width: 100%;
@@ -47,13 +78,14 @@
   }
 
   body {
-    background: var(--black);
+    background-color: var(--black);
     color: var(--ivory);
     font-family: 'DM Sans', sans-serif;
     font-size: var(--body-size);
     line-height: 1.7;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 
   /* CUSTOM CURSOR */
@@ -1156,7 +1188,7 @@
     </a>
   </div>
   <div class="nav-right">
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme" title="Switch Theme (Default / Nigeria Luxury)">
       <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
       <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
@@ -2305,9 +2337,16 @@
   // NAVIGATION & THEME LOGIC
   const themeToggle = document.getElementById('theme-toggle');
 
+  // Load saved theme
+  const savedTheme = localStorage.getItem('ag-theme');
+  if (savedTheme === 'nigeria') {
+    document.body.classList.add('alt-theme');
+  }
+
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('alt-theme');
+      const isAlt = document.body.classList.toggle('alt-theme');
+      localStorage.setItem('ag-theme', isAlt ? 'nigeria' : 'default');
     });
   }
 
