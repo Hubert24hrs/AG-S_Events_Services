@@ -127,11 +127,15 @@
   }
   .loader-brand {
     font-family: 'Italiana', serif;
-    font-size: 2.8rem;
-    font-weight: 700;
+    font-size: 3.5rem;
+    font-weight: 900;
     letter-spacing: 0.25em;
     color: var(--sky);
-    text-shadow: 0 0 30px var(--sky-glow), 0 0 60px rgba(56,189,248,0.12);
+    -webkit-text-stroke: 1px var(--sky);
+    text-shadow: 
+      0 0 30px var(--sky-glow), 
+      0 0 60px rgba(56,189,248,0.15),
+      0 0 90px rgba(56,189,248,0.08);
     opacity: 0;
     animation: fadeIn 0.8s 0.3s forwards;
   }
@@ -176,14 +180,18 @@
   }
   .nav-logo {
     font-family: 'Italiana', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-size: 1.85rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
     color: var(--sky);
     text-decoration: none;
-    text-shadow: 0 0 20px var(--sky-glow), 0 0 40px rgba(56,189,248,0.1);
+    -webkit-text-stroke: 0.8px var(--sky);
+    text-shadow: 
+      0 0 20px var(--sky-glow), 
+      0 0 40px rgba(56,189,248,0.15),
+      0 0 60px rgba(56,189,248,0.08);
     display: block;
-    transition: color 0.3s, text-shadow 0.3s;
+    transition: all 0.3s ease;
   }
   .nav-logo-wrap:hover .nav-logo {
     color: var(--sky-bright);
