@@ -38,9 +38,11 @@
     --sky: #38BDF8;
     --sky-bright: #7DD3FC;
     --sky-glow: rgba(56,189,248,0.18);
+    --brand-color: var(--gold-bright);
+    --brand-glow: rgba(212, 160, 23, 0.3);
   }
 
-  /* NIGERIA LUXURY THEME OVERRIDES */
+  /* MIDNIGHT NAVY THEME OVERRIDES */
   body.alt-theme {
     --black: #0F172A; /* Deep Midnight Navy */
     --black-soft: #1E293B; /* Slate Navy */
@@ -54,6 +56,8 @@
     --sky-bright: #38BDF8;
     --sky-glow: rgba(14, 165, 233, 0.25);
     --glass-border: rgba(255,255,255,0.3);
+    --brand-color: var(--sky);
+    --brand-glow: var(--sky-glow);
   }
   
   body.alt-theme .hero-headline em {
@@ -130,12 +134,12 @@
     font-size: 3.5rem;
     font-weight: 900;
     letter-spacing: 0.25em;
-    color: var(--sky);
-    -webkit-text-stroke: 1px var(--sky);
+    color: var(--brand-color);
+    -webkit-text-stroke: 1px var(--brand-color);
     text-shadow: 
-      0 0 30px var(--sky-glow), 
-      0 0 60px rgba(56,189,248,0.15),
-      0 0 90px rgba(56,189,248,0.08);
+      0 0 30px var(--brand-glow), 
+      0 0 60px var(--brand-glow),
+      0 0 90px var(--brand-glow);
     opacity: 0;
     animation: fadeIn 0.8s 0.3s forwards;
   }
@@ -183,13 +187,13 @@
     font-size: 1.85rem;
     font-weight: 900;
     letter-spacing: 0.1em;
-    color: var(--sky);
+    color: var(--brand-color);
     text-decoration: none;
-    -webkit-text-stroke: 0.8px var(--sky);
+    -webkit-text-stroke: 0.8px var(--brand-color);
     text-shadow: 
-      0 0 20px var(--sky-glow), 
-      0 0 40px rgba(56,189,248,0.15),
-      0 0 60px rgba(56,189,248,0.08);
+      0 0 20px var(--brand-glow), 
+      0 0 40px var(--brand-glow),
+      0 0 60px var(--brand-glow);
     display: block;
     transition: all 0.3s ease;
   }
@@ -2502,7 +2506,7 @@
 
   // Load saved theme
   const savedTheme = localStorage.getItem('ag-theme');
-  if (savedTheme === 'nigeria') {
+  if (savedTheme === 'navy') {
     document.body.classList.add('alt-theme');
     if (themeCheckbox) themeCheckbox.checked = true;
   }
@@ -2510,7 +2514,7 @@
   if (themeCheckbox) {
     themeCheckbox.addEventListener('change', (e) => {
       const isAlt = document.body.classList.toggle('alt-theme', e.target.checked);
-      localStorage.setItem('ag-theme', isAlt ? 'nigeria' : 'default');
+      localStorage.setItem('ag-theme', isAlt ? 'navy' : 'default');
     });
   }
 
