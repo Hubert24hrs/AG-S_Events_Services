@@ -8,13 +8,13 @@
 <meta property="og:title" content="AG's Event Services | Nigeria's Premier Luxury Event Planners">
 <meta property="og:description" content="From intimate ceremonies to grand galas — AG's Event Services crafts unforgettable experiences across Nigeria.">
 <meta property="og:image" content="african_luxury_wedding_1778034678359.png">
-<meta property="og:url" content="https://agsevents.ng">
+<meta property="og:url" content="https://www.agseventservices.com">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AG's Event Services | Nigeria's Premier Luxury Event Planners">
 <meta name="twitter:description" content="Nigeria's premier luxury event planning company. Weddings, galas, corporate events &amp; more.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="canonical" href="https://agsevents.ng">
+<link rel="canonical" href="https://www.agseventservices.com">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Italiana&display=swap');
 
@@ -1429,7 +1429,7 @@
         <img loading="lazy" src="image2.jpeg" alt="AG Events Second" class="about-img-large">
       </div>
       <div class="about-accent-box">
-        <div class="number">8+</div>
+        <div class="number">2+</div>
         <div class="label">Years</div>
       </div>
     </div>
@@ -1437,25 +1437,25 @@
       <span class="section-tag reveal">About Us</span>
       <h2 class="section-title reveal reveal-delay-1">Where Every <em>Detail</em><br>Tells Your Story</h2>
       <p class="section-body reveal reveal-delay-2">
-        At AG's Event Services, we believe every celebration is a masterpiece waiting to be composed. With over eight years of transforming visions into extraordinary realities, we bring an unparalleled blend of creativity, precision, and elegance to every event we orchestrate.
+        At AG's Event Services, we believe every celebration is a masterpiece waiting to be composed. With over two years of transforming visions into extraordinary realities, we bring an unparalleled blend of creativity, precision, and elegance to every event we orchestrate.
         <br><br>
         From intimate gatherings to grand corporate galas, our team of seasoned event architects delivers experiences that transcend the ordinary — leaving impressions that endure long after the final guest departs.
       </p>
       <div class="stats-grid reveal reveal-delay-3">
         <div class="stat-item">
-          <div class="stat-num" data-target="500">0</div>
+          <div class="stat-num" data-target="25" data-suffix="+">0</div>
           <div class="stat-label">Events Executed</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num" data-target="8">0</div>
-          <div class="stat-label">Years of Excellence</div>
+          <div class="stat-num" data-target="2" data-suffix=" years">0</div>
+          <div class="stat-label">Years of Experience</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num" data-target="98">0</div>
+          <div class="stat-num" data-target="98" data-suffix="%">0</div>
           <div class="stat-label">Client Satisfaction %</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num" data-target="50">0</div>
+          <div class="stat-num" data-target="3" data-suffix="+">0</div>
           <div class="stat-label">Corporate Partners</div>
         </div>
       </div>
@@ -1943,9 +1943,10 @@
     const dur = 2000;
     const step = 16;
     const inc = target / (dur / step);
+    const suffix = el.dataset.suffix || '';
     const timer = setInterval(function() {
       start = Math.min(start + inc, target);
-      el.textContent = Math.floor(start) + '+';
+      el.textContent = Math.floor(start) + suffix;
       if (start >= target) clearInterval(timer);
     }, step);
   }
