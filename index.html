@@ -923,63 +923,42 @@
   }
   .news-header { text-align: center; margin-bottom: 4rem; }
   
-  .circular-news-container {
-    max-width: 1400px;
+  .dynamic-news-container {
+    max-width: 900px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    border-radius: 2rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(184,134,11,0.1);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  }
+  .news-active-content {
+    min-height: 22rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .news-visual-side {
-    position: relative;
-    width: 100%;
-    height: 38rem;
-    perspective: 1500px;
-  }
-  .news-image-stack {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-  }
-  .news-stack-img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 2.5rem;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-    transition: all 0.8s cubic-bezier(.4,2,.3,1);
-    opacity: 0;
-    pointer-events: none;
-    filter: brightness(0.6);
-  }
-  .news-stack-img.active { opacity: 1; z-index: 3; pointer-events: auto; transform: translateX(0) translateY(0) scale(1) rotateY(0deg); filter: brightness(1); }
-  .news-stack-img.left { opacity: 1; z-index: 2; pointer-events: auto; transform: translateX(-110px) translateY(-80px) scale(0.85) rotateY(20deg); }
-  .news-stack-img.right { opacity: 1; z-index: 2; pointer-events: auto; transform: translateX(110px) translateY(-80px) scale(0.85) rotateY(-20deg); }
+  .news-active-content.fade-out { opacity: 0; transform: translateY(20px) scale(0.98); }
 
-  .news-content-side { display: flex; flex-direction: column; justify-content: center; }
-  .news-active-content { transition: all 0.4s ease; min-height: 22rem; }
-  .news-active-content.fade-out { opacity: 0; transform: translateY(20px); }
-  
-  .news-region-tag { font-size: 0.9rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 1.5rem; font-weight: 700; }
-  .news-main-title { font-size: clamp(2.2rem, 5vw, 3.8rem); font-family: 'Italiana', serif; color: var(--gold-light); margin-bottom: 2rem; line-height: 1.1; font-weight: 600; letter-spacing: 0.02em; }
-  .news-main-excerpt { font-size: 1.3rem; color: rgba(255,255,255,0.85); line-height: 1.8; margin-bottom: 4rem; font-weight: 300; }
-  
-  .news-nav-controls { display: flex; gap: 2rem; }
-  .news-nav-btn {
-    width: 4.5rem; height: 4.5rem; border-radius: 50%;
-    border: 1px solid rgba(184,134,11,0.3); background: rgba(255,255,255,0.03);
-    color: var(--gold); font-size: 1.8rem; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .news-nav-btn:hover { background: var(--gold); color: var(--black); transform: scale(1.15) rotate(10deg); box-shadow: 0 0 30px var(--brand-glow); }
 
-  @media (max-width: 1100px) {
-    .circular-news-container { grid-template-columns: 1fr; text-align: center; gap: 5rem; }
-    .news-visual-side { height: 28rem; width: 85%; margin: 0 auto; }
-    .news-nav-controls { justify-content: center; }
+  
+  .news-region-tag { font-size: 0.9rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 1.5rem; font-weight: 700; }
+  .news-main-title { font-size: clamp(2rem, 5vw, 3.5rem); font-family: 'Italiana', serif; color: var(--gold-light); margin-bottom: 2rem; line-height: 1.2; font-weight: 600; letter-spacing: 0.02em; }
+  .news-main-excerpt { font-size: 1.3rem; color: rgba(255,255,255,0.8); line-height: 1.8; margin-bottom: 4rem; font-weight: 300; max-width: 750px; }
+  
+  .news-meta { display: flex; justify-content: center; align-items: center; gap: 3rem; color: rgba(255,255,255,0.4); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2.5rem; width: 100%; }
+  .news-link { color: var(--gold-bright); text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; border: 1px solid rgba(184,134,11,0.3); border-radius: 2rem; transition: all 0.3s; }
+  .news-link:hover { background: var(--gold-bright); color: var(--black); box-shadow: 0 0 20px var(--brand-glow); }
+
+  @media (max-width: 900px) {
+    .news-section { padding: 5rem 2rem; }
+    .news-main-title { font-size: 2.2rem; }
+    .news-main-excerpt { font-size: 1.1rem; }
+    .news-meta { flex-direction: column; gap: 1.5rem; }
   }
 
   /* CTA BANNER */
@@ -1643,18 +1622,13 @@
     <h2 class="section-title reveal reveal-delay-1">Global Event <em>News</em></h2>
     <p class="reveal reveal-delay-2" style="font-size:0.85rem; color:rgba(255,255,255,0.5); max-width:500px; margin: 1rem auto 0;">Live feed of luxury event news worldwide, strictly curated for our premium clientele.</p>
   </div>
-  <div class="circular-news-container reveal reveal-delay-3">
-    <div class="news-visual-side">
-      <div class="news-image-stack" id="news-image-stack"></div>
+  <div class="dynamic-news-container reveal reveal-delay-3">
+    <div id="news-active-content" class="news-active-content">
+      <p style="color: var(--gold-bright); letter-spacing: 0.2em;">Syncing luxury event desk...</p>
     </div>
-    <div class="news-content-side">
-      <div id="news-active-content" class="news-active-content">
-        <!-- JS Content Injection -->
-      </div>
-      <div class="news-nav-controls">
-        <button class="news-nav-btn" id="news-prev" aria-label="Previous News">←</button>
-        <button class="news-nav-btn" id="news-next" aria-label="Next News">→</button>
-      </div>
+    <div class="news-nav-controls">
+      <button class="news-nav-btn" id="news-prev" aria-label="Previous News">←</button>
+      <button class="news-nav-btn" id="news-next" aria-label="Next News">→</button>
     </div>
   </div>
 </section>
@@ -2541,118 +2515,88 @@
   }
 
   const fetchEventNews = () => {
-    const stackContainer = document.getElementById('news-image-stack');
     const contentContainer = document.getElementById('news-active-content');
-    if (!stackContainer || !contentContainer) return;
+    const nextBtn = document.getElementById('news-next');
+    const prevBtn = document.getElementById('news-prev');
+    if (!contentContainer || !nextBtn || !prevBtn) return;
 
-    // Local assets to use for news visuals
-    const localAssets = [
-      'image1.jpeg', 'image2.jpeg', 'image3.jpeg', 'image4.jpeg',
-      'image5.jpeg', 'image6.jpeg', 'image7.jpeg', 'image8.jpeg',
-      'image9.jpeg', 'image10.jpeg', 'image11.jpeg', 'image12.jpeg',
-      'african_corporate_gala_1778034700184.png',
-      'african_luxury_wedding_1778034678359.png'
-    ];
-
-    const mockData = [
-      { region: 'Nigeria', title: 'Lagos Fashion Week Returns with Unprecedented Luxury', excerpt: 'The continent\'s premier fashion event announces its 2026 dates, promising exclusive VIP showcases.' },
-      { region: 'Nigeria', title: 'Abuja Elite Polo Tournament Draws Global Crowd', excerpt: 'High society gathers in the capital for the annual charity polo match, featuring bespoke hospitality pavilions.' },
-      { region: 'Nigeria', title: 'Eko Atlantic Set to Host Largest Tech Gala', excerpt: 'Tech billionaires and innovators prepare for the most anticipated networking gala of the decade.' },
-      { region: 'Nigeria', title: 'Port Harcourt Refinery Commissioning Ball', excerpt: 'An exclusive black-tie event celebrating the new era of energy independence.' },
-      { region: 'Nigeria', title: 'Osun Osogbo Festival Elevates VIP Experience', excerpt: 'Cultural heritage meets modern luxury as organizers introduce premium viewing tiers.' },
-      { region: 'Nigeria', title: 'Enugu Coal City Investment Dinner', excerpt: 'South East governors host foreign investors in a spectacularly curated night of culture and commerce.' },
-      { region: 'Nigeria', title: 'Calabar Carnival Announces Platinum Packages', excerpt: 'Africa\'s biggest street party introduces exclusive yacht and balcony packages for 2026.' },
-      { region: 'Nigeria', title: 'Kano Durbar Festival Royal Pavilion', excerpt: 'The historic equestrian parade will feature a newly designed luxury viewing pavilion for dignitaries.' },
-      { region: 'USA', title: 'Met Gala 2026 Theme Revealed', excerpt: 'Fashion\'s biggest night out announces its highly anticipated theme, setting the stage for extravagant designs.' },
-      { region: 'USA', title: 'Coachella Introduces Ultra-VIP Desert Oasis', excerpt: 'The music festival redefines luxury with air-conditioned private villas and personal concierges.' },
-      { region: 'USA', title: 'Oscars After-Party Moves to New Hollywood Venue', excerpt: 'The iconic Vanity Fair party upgrades to a sprawling, multi-level estate for unprecedented privacy.' },
-      { region: 'USA', title: 'Miami Art Basel Breaking Sales Records', excerpt: 'Exclusive previews see record-breaking contemporary art sales amidst lavish beachfront parties.' },
-      { region: 'Asia', title: 'Singapore Grand Prix Paddock Club Overhaul', excerpt: 'The night race elevates its hospitality game with a multi-million dollar redesign of the VIP suites.' },
-      { region: 'Europe', title: 'Cannes Film Festival Red Carpet Logistics', excerpt: 'Behind the scenes of orchestrating the world\'s most glamorous and tightly secured film premiere.' },
-      { region: 'Global', title: 'Dubai Desert Royal Wedding Sets New Standard', excerpt: 'A custom-built oasis hosted the year\'s most opulent private celebration.' },
-      { region: 'Global', title: 'Sydney New Year\'s Harbor VIP Cruise', excerpt: 'Demand surges for ultra-luxury yacht charters ahead of the iconic firework display.' }
-    ];
-
-    // Shuffle and assign random local images
-    for (let i = mockData.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [mockData[i], mockData[j]] = [mockData[j], mockData[i]];
-    }
-    
-    mockData.forEach((item, idx) => {
-      item.img = localAssets[idx % localAssets.length];
-    });
-
+    let items = [];
     let activeIndex = 0;
-    const items = mockData;
+    let autoplay;
 
-    // Create image elements
-    items.forEach((news, idx) => {
-      const img = document.createElement('img');
-      img.src = news.img;
-      img.alt = news.title;
-      img.className = 'news-stack-img';
-      stackContainer.appendChild(img);
-    });
-
-    const imgElements = stackContainer.querySelectorAll('.news-stack-img');
-
-    function updateCarousel() {
-      imgElements.forEach((img, idx) => {
-        img.classList.remove('active', 'left', 'right');
-        
-        const isCenter = idx === activeIndex;
-        const isLeft = (activeIndex - 1 + items.length) % items.length === idx;
-        const isRight = (activeIndex + 1) % items.length === idx;
-
-        if (isCenter) img.classList.add('active');
-        else if (isLeft) img.classList.add('left');
-        else if (isRight) img.classList.add('right');
-      });
-
-      // Update content
+    const renderActiveNews = () => {
+      if (items.length === 0) return;
       contentContainer.classList.add('fade-out');
+      
       setTimeout(() => {
         const news = items[activeIndex];
         contentContainer.innerHTML = `
-          <div class="news-region-tag">${news.region}</div>
-          <h3 class="news-main-title">${news.title}</h3>
-          <p class="news-main-excerpt">${news.excerpt}</p>
+          <div class="news-region-tag">${news.region || 'Global'}</div>
+          <h3 class="news-main-title">${news.title || 'Breaking Event News'}</h3>
+          <p class="news-main-excerpt">${news.excerpt || 'Stay tuned for our latest updates from the world of luxury event planning.'}</p>
           <div class="news-meta">
-            <span>AG's Event Desk</span>
-            <span>May 2026</span>
+            <span>${news.date || 'May 2026'}</span>
+            <a href="${news.link || '#contact-section'}" class="news-link">Read Full Report</a>
           </div>
         `;
         contentContainer.classList.remove('fade-out');
-      }, 400);
-    }
+      }, 500);
+    };
 
-    const nextBtn = document.getElementById('news-next');
-    const prevBtn = document.getElementById('news-prev');
+    const startAutoplay = () => {
+      clearInterval(autoplay);
+      autoplay = setInterval(() => {
+        if (items.length > 0) {
+          activeIndex = (activeIndex + 1) % items.length;
+          renderActiveNews();
+        }
+      }, 10000);
+    };
+
+    const initSlider = (data) => {
+      items = data;
+      renderActiveNews();
+      startAutoplay();
+    };
+
+    if (window.db) {
+      window.db.collection('news').where('published','==',true).orderBy('createdAt','desc').limit(15).get()
+        .then(snap => {
+          if (!snap.empty) {
+            initSlider(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+          } else {
+            initSlider(getMockNews());
+          }
+        })
+        .catch(() => initSlider(getMockNews()));
+    } else {
+      initSlider(getMockNews());
+    }
 
     nextBtn.addEventListener('click', () => {
       activeIndex = (activeIndex + 1) % items.length;
-      updateCarousel();
-      resetAutoplay();
+      renderActiveNews();
+      startAutoplay();
     });
 
     prevBtn.addEventListener('click', () => {
       activeIndex = (activeIndex - 1 + items.length) % items.length;
-      updateCarousel();
-      resetAutoplay();
+      renderActiveNews();
+      startAutoplay();
     });
 
-    let autoplay = setInterval(() => {
-      activeIndex = (activeIndex + 1) % items.length;
-      updateCarousel();
-    }, 8000);
+    function getMockNews() {
+      return [
+        { region: 'Nigeria', title: 'Lagos Fashion Week Returns with Unprecedented Luxury', excerpt: 'The continent\'s premier fashion event announces its 2026 dates, promising exclusive VIP showcases and bespoke design experiences.' },
+        { region: 'Nigeria', title: 'Abuja Elite Polo Tournament Draws Global Crowd', excerpt: 'High society gathers in the capital for the annual charity polo match, featuring bespoke hospitality pavilions by AG\'s Events.' },
+        { region: 'Asia', title: 'Singapore Grand Prix Paddock Club Overhaul', excerpt: 'The night race elevates its hospitality game with a multi-million dollar redesign of the VIP suites and viewing decks.' },
+        { region: 'Europe', title: 'Cannes Film Festival Red Carpet Logistics', excerpt: 'Behind the scenes of orchestrating the world\'s most glamorous and tightly secured film premiere events at the Palais des Festivals.' }
+      ];
+    }
+  };
 
-    function resetAutoplay() {
-      clearInterval(autoplay);
-      autoplay = setInterval(() => {
-        activeIndex = (activeIndex + 1) % items.length;
-        updateCarousel();
-      }, 8000);
+  fetchEventNews();
+
     }
 
     updateCarousel();
