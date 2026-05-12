@@ -178,54 +178,25 @@
     position: relative;
     display: inline-flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     text-decoration: none;
     gap: 0;
   }
   .nav-logo {
     font-family: 'Italiana', serif;
-    font-size: 1.85rem;
-    font-weight: 900;
-    letter-spacing: 0.1em;
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
     color: var(--brand-color);
     text-decoration: none;
-    -webkit-text-stroke: 0.8px var(--brand-color);
-    text-shadow: 
-      0 0 20px var(--brand-glow), 
-      0 0 40px var(--brand-glow),
-      0 0 60px var(--brand-glow);
+    text-shadow: 0 0 15px var(--brand-glow);
     display: block;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .nav-logo-wrap:hover .nav-logo {
-    color: var(--sky-bright);
-    text-shadow: 0 0 28px rgba(56,189,248,0.4);
-  }
-  .nav-logo-underline {
-    display: block;
-    width: 100%;
-    height: 14px;
-    margin-top: -2px;
-    overflow: visible;
-    pointer-events: none;
-  }
-  .nav-underline-path {
-    stroke: var(--sky);
-    stroke-width: 1.8;
-    fill: none;
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
-    transition: stroke 0.3s;
-    animation: navUnderlineDraw 1.4s 2.6s cubic-bezier(0.4,0,0.2,1) forwards;
-  }
-  .nav-logo-wrap:hover .nav-underline-path {
-    stroke: var(--sky-bright);
-    animation: navUnderlineWave 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
-  }
-  @keyframes navUnderlineDraw {
-    0%   { stroke-dashoffset: 300; opacity: 0; }
-    10%  { opacity: 1; }
-    100% { stroke-dashoffset: 0; opacity: 1; }
+    transform: scale(1.05);
+    color: var(--gold-light);
+    text-shadow: 0 0 25px var(--brand-glow);
   }
   @keyframes navUnderlineWave {
     0%   { d: path("M 0,7 Q 75,2 150,7 Q 225,12 300,7"); }
@@ -1303,7 +1274,7 @@
     .about-accent-box { right: 0; bottom: -1rem; width: 90px; height: 90px; }
     .about-accent-box .number { font-size: 1.8rem; }
     .about-img-large { margin-left: 5%; width: 95%; }
-    .nav-logo { font-size: 0.85rem; letter-spacing: 0.05em; white-space: nowrap; }
+    .nav-logo { font-size: 1.25rem; letter-spacing: 0.08em; white-space: nowrap; }
     .form-row { grid-template-columns: 1fr !important; }
     nav { padding: 0.8rem 1rem; }
     .hero-headline { font-size: 2.8rem; line-height: 1.1; margin-bottom: 1.2rem; }
@@ -1375,10 +1346,6 @@
   </button>
   <a class="nav-logo-wrap" href="#" id="nav-logo-link" aria-label="AG's Event Services">
     <span class="nav-logo">AG'S EVENT SERVICES</span>
-    <svg class="nav-logo-underline" viewBox="0 0 300 14" preserveAspectRatio="none">
-      <path class="nav-underline-path" id="nav-underline-path"
-        d="M 0,7 Q 75,2 150,7 Q 225,12 300,7"/>
-    </svg>
   </a>
   <div class="nav-right">
     <label class="gooey-toggle" id="theme-toggle" title="Switch Theme (Default / Nigeria Luxury)">
@@ -2845,59 +2812,9 @@
   })();
 
 
-  // NAV LOGO ANIMATED UNDERLINE (vanilla JS framer-motion equivalent)
-  (function initNavLogoAnimation() {
-    var wrap = document.getElementById('nav-logo-link');
-    var path = document.getElementById('nav-underline-path');
-    if (!wrap || !path) return;
-
-    var normalPath = 'M 0,7 Q 75,2 150,7 Q 225,12 300,7';
-    var hoverPath  = 'M 0,7 Q 75,14 150,7 Q 225,0 300,7';
-    var isHovering = false;
-    var animFrame;
-
-    function morphPath(from, to, duration, onDone) {
-      var start = null;
-      // Parse quadratic bezier control points as numbers for interpolation
-      function parsePoints(d) {
-        var m = d.match(/[-\d.]+/g);
-        return m.map(Number);
-      }
-      var fromP = parsePoints(from);
-      var toP   = parsePoints(to);
-      function step(ts) {
-        if (!start) start = ts;
-        var t = Math.min((ts - start) / duration, 1);
-        // Ease in-out cubic
-        var ease = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
-        var pts = fromP.map(function(v, i) {
-          return (v + (toP[i] - v) * ease).toFixed(3);
-        });
-        path.setAttribute('d',
-          'M ' + pts[0] + ',' + pts[1] +
-          ' Q ' + pts[2] + ',' + pts[3] + ' ' + pts[4] + ',' + pts[5] +
-          ' Q ' + pts[6] + ',' + pts[7] + ' ' + pts[8] + ',' + pts[9]
-        );
-        if (t < 1) {
-          animFrame = requestAnimationFrame(step);
-        } else {
-          if (onDone) onDone();
-        }
-      }
-      cancelAnimationFrame(animFrame);
-      animFrame = requestAnimationFrame(step);
-    }
-
-    wrap.addEventListener('mouseenter', function() {
-      isHovering = true;
-      morphPath(normalPath, hoverPath, 400, function() {
-        if (isHovering) morphPath(hoverPath, normalPath, 600, null);
-      });
-    });
-    wrap.addEventListener('mouseleave', function() {
-      isHovering = false;
-      morphPath(path.getAttribute('d'), normalPath, 350, null);
-    });
+  // Navigation logo animation removed by user request
+  (function initNavLogoCleanup() {
+    // Logo styling now handled purely via CSS transitions
   })();
 
 })();
