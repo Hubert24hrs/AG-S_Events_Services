@@ -372,13 +372,13 @@
   .hero-content {
     position: relative; z-index: 3;
     text-align: center;
-    padding: 4rem 3rem;
+    padding: 6rem 3rem 4rem;
     max-width: 900px;
-    background: rgba(10, 10, 10, 0.35);
-    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 2rem;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
+    background: rgba(10, 10, 10, 0.45);
+    backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 2.5rem;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.2);
   }
   .hero-eyebrow {
     font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
@@ -1223,27 +1223,36 @@
     }
     body nav {
       display: grid !important;
-      grid-template-columns: 60px 1fr 60px !important;
+      grid-template-columns: 50px 1fr 50px !important;
       align-items: center !important;
-      padding: 0.8rem 1rem !important;
+      padding: 0.8rem 1.2rem !important;
+      height: 70px !important;
     }
     .menu-btn {
       grid-column: 1;
       justify-self: start;
+      width: 40px !important;
+      display: flex !important;
+      justify-content: center !important;
     }
     .nav-logo-wrap {
       grid-column: 2;
       justify-self: center;
-      margin: 0 auto;
+      margin: 0 auto !important;
+      display: flex !important;
+      justify-content: center !important;
       align-items: center !important;
-      text-align: center;
+      text-align: center !important;
+      width: 100% !important;
     }
     .nav-right {
       grid-column: 3;
       justify-self: end;
       display: flex !important;
-      align-items: center;
-      gap: 0.5rem !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      width: 40px !important;
+      gap: 0 !important;
     }
     .nav-cta { display: none; }
     .services-grid { grid-template-columns: 1fr !important; }
@@ -1419,7 +1428,7 @@
       </div>
       <div class="about-accent-box">
         <div class="number">2+</div>
-        <div class="label">Years</div>
+        <div class="label">Exp.</div>
       </div>
     </div>
     <div class="about-text-side">
@@ -1436,7 +1445,7 @@
           <div class="stat-label">Events Executed</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num" data-target="2" data-suffix=" years">0</div>
+          <div class="stat-num" data-target="2" data-suffix="+">0</div>
           <div class="stat-label">Years of Experience</div>
         </div>
         <div class="stat-item">
